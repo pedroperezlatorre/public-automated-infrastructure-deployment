@@ -29,7 +29,7 @@ toolchain:
 services:
   terraform-repo:
     service_id: >
-      $env.source_provider ? $env.source_provider : 'hostedgit'
+      $env.source_provider ? $env.source_provider : 'github_integrated'
     parameters:
       repo_name: "{{toolchain.name}}"
       repo_url: >
