@@ -41,6 +41,7 @@ services:
       type: $env.type || 'link'
       has_issues: true
       enable_traceability: true
+      terraform-repo_legal: true
   terraform-apply:
     service_id: pipeline
     parameters:
