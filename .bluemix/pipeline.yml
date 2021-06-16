@@ -1,0 +1,288 @@
+---
+defaultBaseImageVersion: latest
+properties:
+  - name: API_KEY
+    value: ${API_KEY}
+    type: secure
+  - name: REGION_NAME
+    value: ${REGION_NAME}
+    type: text
+stages:
+  - name: CREATE/UPDATE
+    inputs:
+      - type: git
+        branch: develop
+        service: ${GIT_REPO}
+    triggers:
+      - type: commit
+    properties:
+      - name: REPOSITORY_ACCESS_TOKEN
+        value: ${REPOSITORY_ACCESS_TOKEN}
+        type: secure
+    jobs:
+      - name: "Create/Update Workspace"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
+
+          sed -i "s/apikey_placeholder/$API_KEY/g" ./schematics/initial.json
+
+          CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
+          TAGS_CD=$(echo $CONTINUOUS_DELIVERY | jq ".items[0].tags")
+          TAGS_CD_LENGTH=$(echo $CONTINUOUS_DELIVERY | jq ".items | length")
+
+          if [[ "$TAGS_CD_LENGTH" !=  "0" ]] && [[ ! ${TAGS_CD[*]} =~ schematics ]]
+          then
+            ibmcloud resource service-instance-delete "Continuous Delivery" -f
+          fi
+
+          WORKSPACE_NAME=$(cat ./schematics/initial.json | jq ".name")
+          WORKSPACE_ID=$(ibmcloud schematics workspace list --json | jq ".workspaces | select (. != null) | .[] | select ( .name == $WORKSPACE_NAME ) .id" | sed -e 's/^"//' -e 's/"$//')
+
+          if [ ! -z "$WORKSPACE_ID" ]
+          then
+            WORKSPACE=$(ibmcloud schematics workspace update --id $WORKSPACE_ID --file ./schematics/initial.json  --json --github-token $REPOSITORY_ACCESS_TOKEN)
+
+          else
+            WORKSPACE=$(ibmcloud schematics workspace new --file ./schematics/initial.json --json --github-token $REPOSITORY_ACCESS_TOKEN)
+            WORKSPACE_ID=$(echo $WORKSPACE | jq ".id" | sed -e 's/^"//' -e 's/"$//')
+          fi
+
+          RESOURCE_GROUPS_NAMES=$(echo $WORKSPACE | jq ".template_data[0].variablestore[] | select ( .name == \"infrastructure_resource_groups_names\" ) .value" | sed -e 's/^"\[//' -e 's/\]"$//' | sed -e 's/\\\"//g' )
+          PIPELINES_RESOURCE_GROUP_NAME=$(echo $WORKSPACE | jq ".template_data[0].variablestore[] | select ( .name == \"pipelines_resource_group_name\" ) .value"  | sed 's/ *$//g' | sed 's/"//g')
+
+          mkdir -p $ARCHIVE_DIR
+          cp -R -n ./ $ARCHIVE_DIR/ || true
+          echo "WORKSPACE_ID=${WORKSPACE_ID}" >> $ARCHIVE_DIR/build.properties
+          echo "RESOURCE_GROUPS_NAMES=${RESOURCE_GROUPS_NAMES}" >> $ARCHIVE_DIR/build.properties
+          echo "PIPELINES_RESOURCE_GROUP_NAME=${PIPELINES_RESOURCE_GROUP_NAME}" >> $ARCHIVE_DIR/build.properties
+
+          unset WORKSPACE
+  - name: PLAN
+    inputs:
+      - type: job
+        stage: CREATE/UPDATE
+        job: "Create/Update Workspace"
+    triggers:
+      - type: stage
+    properties:
+      - name: properties
+        value: build.properties
+        type: file
+    jobs:
+      - name: "Terraform Plan"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
+
+          # run schematics plan
+          ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)
+
+          # get rid of trailing "OK" if found
+          if [[ $ACTIVITY == *OK ]]; then
+            ACTIVITY=${ACTIVITY%??}
+          fi
+
+          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          echo "Activity ID   $ACTIVITY_ID"
+
+          # poll until status is no longer INPROGRESS, or if there is an error
+          while :
+          do
+            STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
+            
+            RET_VAL=$?
+            if [ $RET_VAL -ne 0 ]; then
+
+              echo $STATUS
+              exit $RET_VAL
+            else
+
+              # get rid of trailing "OK" if found
+              if [[ $STATUS == *OK ]]; then
+                STATUS=${STATUS%??}
+              fi
+              STATUS_VALUE=$(echo $STATUS | jq -r ".status")
+              echo "Polling for status: $STATUS_VALUE"
+
+              if [ "$STATUS_VALUE" = "FAILED" ]; then 
+                ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+                exit 1
+              elif [ "$STATUS_VALUE" != "INPROGRESS" ] && [ "$STATUS_VALUE" != "CREATED" ]; then  
+                break
+              fi
+            fi
+
+            # sleep for 5 seconds, while waiting for completion
+            sleep 5
+          done
+
+          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+  - name: APPLY
+    inputs:
+      - type: job
+        stage: PLAN
+        job: "Terraform Plan"
+    triggers:
+      - type: stage
+    properties:
+      - name: properties
+        value: build.properties
+        type: file
+      - name: CR_PLAN
+        value: ${CR_PLAN}
+        type: text
+    jobs:
+      - name: "Terraform Apply"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
+
+
+          # run schematics apply
+          ACTIVITY=$(ibmcloud schematics apply --id $WORKSPACE_ID --json --force)
+
+          # get rid of trailing "OK" if found
+          if [[ $ACTIVITY == *OK ]]; then
+            ACTIVITY=${ACTIVITY%??}
+          fi
+
+          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          echo "Activity ID   $ACTIVITY_ID"
+
+          # poll until status is no longer INPROGRESS, or if there is an error
+          while :
+          do
+            STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
+            
+            RET_VAL=$?
+            if [ $RET_VAL -ne 0 ]; then
+
+              echo $STATUS
+              exit $RET_VAL
+            else
+
+              # get rid of trailing "OK" if found
+              if [[ $STATUS == *OK ]]; then
+                STATUS=${STATUS%??}
+              fi
+              STATUS_VALUE=$(echo $STATUS | jq -r ".status")
+              echo "Polling for status: $STATUS_VALUE"
+
+              if [ "$STATUS_VALUE" = "FAILED" ]; then
+                ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+                exit 1
+              elif [ "$STATUS_VALUE" != "INPROGRESS" ]; then  
+                break
+              fi
+            fi
+
+            # sleep for 5 seconds, while waiting for completion
+            sleep 5
+          done
+
+          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+  - name: INFRASTRUCTURE TOOLCHAIN
+    inputs:
+      - type: job
+        stage: APPLY
+        job: "Terraform Apply"
+    triggers:
+      - type: stage
+    properties:
+      - name: properties
+        value: build.properties
+        type: file
+      - name: INFRASTRUCTURE_TOOLCHAIN_NAME
+        value: alr-terraform-infrastructure
+        type: text
+      - name: TEMPLATE_REPO_LIST
+        value: ${TEMPLATE_REPO_LIST}
+        type: text
+      - name: TEMPLATE_REPO_TOKEN
+        value: ${TEMPLATE_REPO_TOKEN}
+        type: secure
+      - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST
+        value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST}
+        type: text
+      - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN
+        value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN}
+        type: secure
+      - name: REGION_ID
+        value: ${REGION_ID}
+        type: text
+    jobs:
+      - name: "Terraform Infrastructure Toolchain"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+
+          IFS=, read -ra template_repo_list <<<"$TEMPLATE_REPO_LIST" 
+          IFS=, read -ra toolchain_config_template_repo_list <<<"$TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST" 
+
+
+          IFS=, read -ra ary <<<"$RESOURCE_GROUPS_NAMES" 
+          for key in "${!ary[@]}"; do 
+
+          RESOURCE_GROUP_NAME=${ary[$key]}
+          TEMPLATE_REPO=${template_repo_list[$key]}
+          TOOLCHAIN_CONFIG_TEMPLATE_REPO=${toolchain_config_template_repo_list[$key]}
+
+          # force login
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME -g $PIPELINES_RESOURCE_GROUP_NAME
+
+          RESOURCE_GROUP_ID=$(ibmcloud resource groups --output json | jq ".[] | select (.name == \"$PIPELINES_RESOURCE_GROUP_NAME\") .id" | sed -e 's/^"//' -e 's/"$//')
+          INFRASTRUCTURE_RESOURCE_GROUP_ID=$(ibmcloud resource groups --output json | jq ".[] | select (.name == \"$RESOURCE_GROUP_NAME\") .id" | sed -e 's/^"//' -e 's/"$//')
+
+          IAM_TOKEN=$(ibmcloud iam oauth-tokens | sed 's/^.*Bearer //g')
+
+          RESULT=$(ibmcloud dev toolchain-get $INFRASTRUCTURE_TOOLCHAIN_NAME)
+
+          if [[ $RESULT == *"The toolchain does not exist or is not valid"* ]]; then
+              TOOLCHAIN_EXISTS=0
+          else 
+              TOOLCHAIN_EXISTS=1
+          fi
+
+          if [[ "$TOOLCHAIN_EXISTS" == "0" ]];
+          then 
+            CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
+            elif [[ "$FORCE_DELETE" == "1" ]];
+          then
+              ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME 
+
+              set -x
+              CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
+              set +x
+              
+          else 
+              echo "Toolchain already created, run:"
+              echo "ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME"
+              echo "To delete it and then run this script again to create it"
+          fi
+
+          if [[ $CURL_RESULT == *"\"status\":\"error\""* ]];
+          then
+              echo $CURL_RESULT
+              exit 1
+          fi
+
+          done

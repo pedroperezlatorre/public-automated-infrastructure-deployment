@@ -1,0 +1,73 @@
+version: "2"
+template:
+  name: "Schematics Infrastructure as Code Toolchain"
+  description: "Prototype toolchain templates for IBM Cloud Schematics "
+  required:
+    - terraform-apply
+    - terraform-repo
+  info:
+    #original static git url and branch string definitions
+    #git url: >-
+    #  [https://github.com/open-toolchain/schematics-toolchain](https://github.com/open-toolchain/schematics-toolchain)
+    #git branch: >-
+    #  [master](https://github.com/open-toolchain/schematics-toolchain/tree/master)
+
+    # compute the git url and branch values dynamically so that they remain correct when repo is forked etc.
+    # note: `repository` url param must always be provided while the `branch` url param is optional
+    # the computed urls are of the same format as the original static urls shown above
+    git url: >
+      '[' + $env.repository + '](' + $env.repository + ')'
+    git branch: >
+      $env.branch ?
+        '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')' :
+        '[develop]('+ $env.repository + '/tree/develop)'
+toolchain:
+  name: "{{toolchain_name}}"
+  #template:
+  #  getting_started:
+  #    $ref: "#/messages/template.gettingStarted"
+services:
+  terraform-repo:
+    service_id: >
+      $env.source_provider ? $env.source_provider : 'hostedgit'
+    parameters:
+      repo_name: "{{toolchain.name}}"
+      repo_url: >
+        $env.type === 'link' ? 
+          $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
+      source_repo_url: >
+        $env.type === 'fork' || $env.type === 'clone' ? 
+          $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
+      type: $env.type || 'link'
+      has_issues: true
+      enable_traceability: true
+  terraform-apply:
+    service_id: pipeline
+    parameters:
+      services:
+        - terraform-repo
+      name: "Schematics Pipeline"
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          GIT_REPO: terraform-repo
+          API_KEY: "{{form.pipeline.parameters.api-key}}"
+          REGION_NAME: "{{region_name}}"
+          TEMPLATE_REPO_LIST: "{{infrastructure_repository}}"
+          TEMPLATE_REPO_TOKEN: "{{infrastructure_repository_token}}"
+          TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST: "{{toolchain_configuration_repository}}"
+          TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN: "{{toolchain_configuration_repository_token}}"
+          REPOSITORY_ACCESS_TOKEN: "{{repository_token}}"
+          REGION_ID: "{{env_id}}"
+          CR_PLAN: $env.cr_plan || 'free'
+        execute: true
+  webide:
+    service_id: orion
+form:
+  pipeline:
+    parameters:
+      api-key: "{{apiKey}}"
+    schema:
+      $ref: deploy.json

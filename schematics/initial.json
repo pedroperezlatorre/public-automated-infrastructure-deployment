@@ -1,0 +1,55 @@
+{
+    "name": "initial",
+    "type": ["terraform_v0.12.0"],
+    "description": "Resource groups and continuous delivery",
+    "tags": [],
+    "template_repo": {
+      "url": "https://eu-de.git.cloud.ibm.com/alr/alr-terraform/tree/master/terraform"
+    },
+    "template_data": [
+      {
+        "folder": ".",
+        "type": "terraform_v0.12.0",
+        "variablestore": [
+          {
+            "name": "resource_groups_count",
+            "value": "2",
+            "type": "string"
+          },
+          {
+            "name": "resource_groups_names",
+            "value": "[\"ctti\",\"ctti-cd\"]",
+            "type": "list"
+          },
+          {
+            "name": "pipelines_resource_group_name",
+            "value": "ctti-cd",
+            "type": "string"
+          },
+          {
+            "name": "infrastructure_resource_groups_names",
+            "value": "[\"ctti\"]",
+            "type": "list"
+          },
+          {
+            "name": "resource_group_cd_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "default_cd_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "ibmcloud_api_key",
+            "value": "apikey_placeholder",
+            "type": "string",
+            "secure": true
+          }
+        ]
+      }
+    ],
+    "githubtoken": "$REPOSITORY_ACCESS_TOKEN"
+  }
+  
