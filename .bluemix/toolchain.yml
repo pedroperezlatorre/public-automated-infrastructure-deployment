@@ -43,6 +43,7 @@ services:
       enable_traceability: true
       legal: true
       repo_url: $env.repository
+      api-key: $env.apikey
   terraform-apply:
     service_id: pipeline
     parameters:
