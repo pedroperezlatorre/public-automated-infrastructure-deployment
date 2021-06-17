@@ -19,7 +19,7 @@
         "url": "/devops/validator/validator-v1.html"
       },
       {
-        "type": "string",
+        "type": "password",
         "readonly": false,
         "title": "IBM Cloud API Key",
         "key": "api-key"
