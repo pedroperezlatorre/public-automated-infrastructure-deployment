@@ -50,7 +50,7 @@ services:
         - terraform-repo
       name: "Schematics Pipeline"
       ui-pipeline: true
-      api-key: $env.apikey
+      api_key: $env.apikey
       configuration:
         content:
           $text: pipeline.yml
