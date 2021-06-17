@@ -32,9 +32,9 @@ services:
       $env.source_provider ? $env.source_provider : 'github_integrated'
     parameters:
       repo_name: "{{toolchain.name}}"
-      repo_url: >
-        $env.type === 'link' ? 
-          $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
+      # repo_url: >
+      #   $env.type === 'link' ? 
+      #     $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
       source_repo_url: >
         $env.type === 'fork' || $env.type === 'clone' ? 
           $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
