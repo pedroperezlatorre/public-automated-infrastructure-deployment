@@ -27,6 +27,8 @@ stages:
         script: |
           #!/bin/bash
 
+          set -x
+
           # force login (required by schematics cli)
           ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
 
@@ -81,6 +83,8 @@ stages:
         build_type: shell
         script: |
           #!/bin/bash
+
+          set -x
 
           # force login (required by schematics cli)
           ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
@@ -149,6 +153,8 @@ stages:
         build_type: shell
         script: |
           #!/bin/bash
+
+          set -x
 
           # force login (required by schematics cli)
           ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
@@ -233,6 +239,8 @@ stages:
         build_type: shell
         script: |
           #!/bin/bash
+
+          set -x
 
 
           IFS=, read -ra template_repo_list <<<"$TEMPLATE_REPO_LIST" 
