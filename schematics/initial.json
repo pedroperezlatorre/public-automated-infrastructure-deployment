@@ -4,7 +4,7 @@
     "description": "Resource groups and continuous delivery",
     "tags": [],
     "template_repo": {
-      "url": "$GIT_REPO"
+      "url": "$REPOSITORY_ACCESS_TOKEN"
     },
     "githubtoken": "$REPOSITORY_ACCESS_TOKEN",
     "template_data": [
