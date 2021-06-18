@@ -4,7 +4,7 @@
     "description": "Resource groups and continuous delivery",
     "tags": [],
     "template_repo": {
-      "url": "https://eu-de.git.cloud.ibm.com/alr/alr-terraform/tree/master/terraform"
+      "url": "https://github.ibm.com/tech-garage-spgi/entreno-mapfre-fac-initial-plataforma/tree/develop/terraform"
     },
     "template_data": [
       {
@@ -18,17 +18,17 @@
           },
           {
             "name": "resource_groups_names",
-            "value": "[\"ctti\",\"ctti-cd\"]",
+            "value": "[\"mapfre\",\"mapfre-cd\"]",
             "type": "list"
           },
           {
             "name": "pipelines_resource_group_name",
-            "value": "ctti-cd",
+            "value": "mapfre-cd",
             "type": "string"
           },
           {
             "name": "infrastructure_resource_groups_names",
-            "value": "[\"ctti\"]",
+            "value": "[\"mapfre\"]",
             "type": "list"
           },
           {
