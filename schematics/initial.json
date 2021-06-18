@@ -4,7 +4,7 @@
     "description": "Resource groups and continuous delivery",
     "tags": [],
     "template_repo": {
-      "url": "https://github.ibm.com/tech-garage-spgi/entreno-mapfre-fac-initial-plataforma/tree/develop/terraform"
+      "url": "$GIT_REPO/tree/develop/terraform"
     },
     "githubtoken": "$REPOSITORY_ACCESS_TOKEN",
     "template_data": [
