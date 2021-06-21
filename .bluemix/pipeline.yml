@@ -19,9 +19,9 @@ stages:
       - name: REPOSITORY_ACCESS_TOKEN
         value: ${REPOSITORY_ACCESS_TOKEN}
         type: secure
-      - name: GIT_REPO
-        value: ${GIT_REPO}
-        type: string
+      # - name: GIT_REPO
+      #   value: ${GIT_REPO}
+      #   type: string
     jobs:
       - name: "Create/Update Workspace"
         type: builder
