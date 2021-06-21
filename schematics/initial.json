@@ -1,5 +1,5 @@
 {
-    "name": "initial",
+    "name": "initial0",
     "type": ["terraform_v0.12.0"],
     "description": "Resource groups and continuous delivery",
     "tags": [],
