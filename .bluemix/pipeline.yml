@@ -38,7 +38,8 @@ stages:
           sed -i "s/apikey_placeholder/$API_KEY/g" ./schematics/initial.json
 
           # Set the terraform repo URL
-          sed -i "s/template_repo_placeholder/$GIT_REPO/g" ./schematics/initial.json
+          ESCAPED_GIT_REPO=$(printf '%s\n' "$GIT_REPO" | sed -e 's/[\/&]/\\&/g')
+          sed -i "s/template_repo_placeholder/$ESCAPED_GIT_REPO/g" ./schematics/initial.json
 
           CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
           TAGS_CD=$(echo $CONTINUOUS_DELIVERY | jq ".items[0].tags")
