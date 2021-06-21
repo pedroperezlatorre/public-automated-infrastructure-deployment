@@ -1,6 +1,6 @@
 {
     "name": "initial0",
-    "type": ["terraform_v0.12.0"],
+    "type": ["terraform_v0.14"],
     "description": "Resource groups and continuous delivery",
     "tags": [],
     "template_repo": {
@@ -10,7 +10,7 @@
     "template_data": [
       {
         "folder": ".",
-        "type": "terraform_v0.12.0",
+        "type": "terraform_v0.14",
         "variablestore": [
           {
             "name": "resource_groups_count",
