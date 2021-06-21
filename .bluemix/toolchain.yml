@@ -55,7 +55,7 @@ services:
         content:
           $text: pipeline.yml
         env:
-          GIT_REPO: "{{repository}}" #terraform-repo
+          GIT_REPO: terraform-repo
           API_KEY: "{{form.pipeline.parameters.api-key}}"
           REGION_NAME: "{{region_name}}"
           TEMPLATE_REPO_LIST: "{{infrastructure_repository}}"
