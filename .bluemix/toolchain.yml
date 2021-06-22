@@ -64,6 +64,7 @@ services:
           TEMPLATE_REPO_TOKEN: "{{infrastructure_repository_token}}"
           TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST: "{{toolchain_configuration_repository}}"
           TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN: "{{toolchain_configuration_repository_token}}"
+          TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH: "{{toolchain_configuration_repository_branch}}"
           REPOSITORY_ACCESS_TOKEN: "{{repository_token}}"
           REGION_ID: "{{env_id}}"
           CR_PLAN: $env.cr_plan || 'free'
