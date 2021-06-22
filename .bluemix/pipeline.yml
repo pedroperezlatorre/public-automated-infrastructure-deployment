@@ -251,10 +251,10 @@ stages:
         type: text
       - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN
         value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN}
+        type: secure
       - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH
         value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH}
         type: text
-        type: secure
       - name: REGION_ID
         value: ${REGION_ID}
         type: text
