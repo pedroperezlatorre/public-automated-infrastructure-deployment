@@ -20,7 +20,10 @@ variable unique_id {
 }
 ##############################################################################
 
-
+variable "resource_groups_count" {
+  description = "number of resource groups to be created"
+  type        = string
+}
 
 variable "resource_groups_names" {
   description = "list with the name of the resource groups to be created"
