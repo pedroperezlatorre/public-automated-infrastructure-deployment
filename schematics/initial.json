@@ -20,17 +20,17 @@
           },
           {
             "name": "resource_groups_names",
-            "value": "[\"mapfre\",\"mapfre-cd\"]",
+            "value": "[\"customer_placeholder\",\"customer_placeholder-cd\"]",
             "type": "list"
           },
           {
             "name": "pipelines_resource_group_name",
-            "value": "mapfre-cd",
+            "value": "customer_placeholder-cd",
             "type": "string"
           },
           {
             "name": "infrastructure_resource_groups_names",
-            "value": "[\"mapfre\"]",
+            "value": "[\"customer_placeholder\"]",
             "type": "list"
           },
           {
@@ -48,6 +48,11 @@
             "value": "apikey_placeholder",
             "type": "string",
             "secure": true
+          },
+          {
+            "name": "unique_id",
+            "value": "customer_placeholder",
+            "type": "string"
           }
         ]
       }

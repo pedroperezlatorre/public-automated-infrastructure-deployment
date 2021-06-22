@@ -13,6 +13,9 @@ properties:
   - name: GIT_REPO_BRANCH
     value: ${GIT_REPO_BRANCH}
     type: text
+  - name: CUSTOMER
+    value: ${CUSTOMER}
+    type: text
 stages:
   - name: CREATE/UPDATE
     inputs:
@@ -49,6 +52,9 @@ stages:
 
           # Set the terraform Region
           sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json
+
+          # Set the Customer name
+          sed -i "s/customer_placeholder/$CUSTOMER/g" ./schematics/initial.json
 
 
           CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)

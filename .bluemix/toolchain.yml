@@ -67,6 +67,7 @@ services:
           REPOSITORY_ACCESS_TOKEN: "{{repository_token}}"
           REGION_ID: "{{env_id}}"
           CR_PLAN: $env.cr_plan || 'free'
+          CUSTOMER: '{{customer}}'
         execute: true
   webide:
     service_id: orion
