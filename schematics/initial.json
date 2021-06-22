@@ -5,7 +5,7 @@
     "description": "Resource groups and continuous delivery",
     "tags": [],
     "template_repo": {
-      "url": "template_repo_placeholder"
+      "url": "template_repo_placeholder/tree/template_repo_branch_placeholder/terraform"
     },
     "githubtoken": "$REPOSITORY_ACCESS_TOKEN",
     "template_data": [

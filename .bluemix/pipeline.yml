@@ -10,6 +10,9 @@ properties:
   - name: GIT_REPO_URL
     value: ${GIT_REPO_URL}
     type: text
+  - name: GIT_REPO_BRANCH
+    value: ${GIT_REPO_BRANCH}
+    type: text
 stages:
   - name: CREATE/UPDATE
     inputs:
@@ -40,6 +43,9 @@ stages:
           # Set the terraform repo URL
           ESCAPED_GIT_REPO=$(printf '%s\n' "$GIT_REPO_URL" | sed -e 's/[\/&]/\\&/g')
           sed -i "s/template_repo_placeholder/$ESCAPED_GIT_REPO/g" ./schematics/initial.json
+
+          # Set the terraform repo branch
+          sed -i "s/template_repo_branch_placeholder/$GIT_REPO_BRANCH/g" ./schematics/initial.json
 
           # Set the terraform Region
           sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json
