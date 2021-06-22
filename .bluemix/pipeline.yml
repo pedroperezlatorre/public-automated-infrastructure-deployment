@@ -41,6 +41,10 @@ stages:
           ESCAPED_GIT_REPO=$(printf '%s\n' "$GIT_REPO_URL" | sed -e 's/[\/&]/\\&/g')
           sed -i "s/template_repo_placeholder/$ESCAPED_GIT_REPO/g" ./schematics/initial.json
 
+          # Set the terraform Region
+          sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json
+
+
           CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
           TAGS_CD=$(echo $CONTINUOUS_DELIVERY | jq ".items[0].tags")
           TAGS_CD_LENGTH=$(echo $CONTINUOUS_DELIVERY | jq ".items | length")
