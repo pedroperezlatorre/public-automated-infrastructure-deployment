@@ -19,9 +19,6 @@ stages:
       - name: REPOSITORY_ACCESS_TOKEN
         value: ${REPOSITORY_ACCESS_TOKEN}
         type: secure
-      # - name: GIT_REPO
-      #   value: ${GIT_REPO}
-      #   type: string
     jobs:
       - name: "Create/Update Workspace"
         type: builder
@@ -38,7 +35,7 @@ stages:
           sed -i "s/apikey_placeholder/$API_KEY/g" ./schematics/initial.json
 
           # Set the terraform repo URL
-          ESCAPED_GIT_REPO=$(printf '%s\n' "$GIT_REPO" | sed -e 's/[\/&]/\\&/g')
+          ESCAPED_GIT_REPO=$(printf '%s\n' "$GIT_REPO_URL" | sed -e 's/[\/&]/\\&/g')
           sed -i "s/template_repo_placeholder/$ESCAPED_GIT_REPO/g" ./schematics/initial.json
 
           CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
