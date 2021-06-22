@@ -246,6 +246,9 @@ stages:
       - name: TEMPLATE_REPO_TOKEN
         value: ${TEMPLATE_REPO_TOKEN}
         type: secure
+      - name: TEMPLATE_REPO_BRANCH
+        value: ${TEMPLATE_REPO_BRANCH}
+        type: text
       - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST
         value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST}
         type: text
@@ -298,13 +301,13 @@ stages:
 
           if [[ "$TOOLCHAIN_EXISTS" == "0" ]];
           then 
-            CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
+            CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&branch=TEMPLATE_REPO_BRANCH&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
             elif [[ "$FORCE_DELETE" == "1" ]];
           then
               ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME 
 
               set -x
-              CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
+              CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&branch=TEMPLATE_REPO_BRANCH&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
               set +x
               
           else 

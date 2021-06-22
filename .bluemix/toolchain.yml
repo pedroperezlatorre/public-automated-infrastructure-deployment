@@ -62,6 +62,7 @@ services:
           REGION_NAME: "{{region_name}}"
           TEMPLATE_REPO_LIST: "{{infrastructure_repository}}"
           TEMPLATE_REPO_TOKEN: "{{infrastructure_repository_token}}"
+          TEMPLATE_REPO_BRANCH: "{{infrastructure_repository_branch}}"
           TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST: "{{toolchain_configuration_repository}}"
           TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN: "{{toolchain_configuration_repository_token}}"
           TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH: "{{toolchain_configuration_repository_branch}}"
