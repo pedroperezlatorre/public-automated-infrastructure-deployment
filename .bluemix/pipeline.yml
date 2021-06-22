@@ -7,6 +7,9 @@ properties:
   - name: REGION_NAME
     value: ${REGION_NAME}
     type: text
+  - name: GIT_REPO_URL
+    value: ${GIT_REPO_URL}
+    type: text
 stages:
   - name: CREATE/UPDATE
     inputs:
