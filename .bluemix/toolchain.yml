@@ -6,21 +6,13 @@ template:
     - terraform-apply
     - terraform-repo
   info:
-    #original static git url and branch string definitions
-    #git url: >-
-    #  [https://github.com/open-toolchain/schematics-toolchain](https://github.com/open-toolchain/schematics-toolchain)
-    #git branch: >-
-    #  [master](https://github.com/open-toolchain/schematics-toolchain/tree/master)
-
     # compute the git url and branch values dynamically so that they remain correct when repo is forked etc.
     # note: `repository` url param must always be provided while the `branch` url param is optional
     # the computed urls are of the same format as the original static urls shown above
     git url: >
       '[' + $env.repository + '](' + $env.repository + ')'
     git branch: >
-      $env.branch ?
-        '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')' :
-        '[develop]('+ $env.repository + '/tree/develop)'
+      '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')' :
 toolchain:
   name: "{{toolchain_name}}"
   #template:
