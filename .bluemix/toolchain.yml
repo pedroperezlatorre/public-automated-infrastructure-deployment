@@ -32,7 +32,6 @@ services:
         - terraform-repo
       name: "Schematics Pipeline"
       ui-pipeline: true
-      # ibmcloud_api_key: $env.apikey
       configuration:
         content:
           $text: pipeline.yml

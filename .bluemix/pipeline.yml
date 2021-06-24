@@ -20,8 +20,8 @@ stages:
   - name: CREATE/UPDATE
     inputs:
       - type: git
-        branch: develop
         service: ${GIT_REPO}
+        branch: ${GIT_REPO_BRANCH}
     triggers:
       - type: commit
     properties:
