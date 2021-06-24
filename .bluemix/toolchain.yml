@@ -14,17 +14,16 @@ template:
     git branch: >
       [{{branch}}]({{repository}}/tree/{{branch}})
 toolchain:
-  name: "{{toolchain_name}}"
+  name: '{{toolchain_name}}'
 services:
   terraform-repo:
-    service_id: >
-      $env.source_provider ? $env.source_provider : 'github_integrated'
+    service_id: github_integrated
     parameters:
-      repo_name: "{{toolchain.name}}"
-      type: $env.type || 'link'
+      repo_name: '{{toolchain.name}}'
+      type: '{{type}}'
       has_issues: true
       enable_traceability: true
-      legal: true # 'I Undertand' checkbox
+      legal: true # 'I Understand' checkbox
       repo_url: '{{repository}}'
   terraform-apply:
     service_id: pipeline
