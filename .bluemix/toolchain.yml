@@ -10,7 +10,7 @@ template:
     # note: `repository` url param must always be provided while the `branch` url param is optional
     # the computed urls are of the same format as the original static urls shown above
     git url: >
-      '[' + $env.repository + '](' + $env.repository + ')'
+      '[' + '{{repository}}' + '](' + '{{repository}}' + ')'
     git branch: >
       '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')'
 toolchain:
@@ -21,14 +21,11 @@ services:
       $env.source_provider ? $env.source_provider : 'github_integrated'
     parameters:
       repo_name: "{{toolchain.name}}"
-      # source_repo_url: >
-      #   $env.type === 'fork' || $env.type === 'clone' ? 
-      #     $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
       type: $env.type || 'link'
       has_issues: true
       enable_traceability: true
       legal: true # 'I Undertand' checkbox
-      repo_url: $env.repository
+      repo_url: '{{repository}}'
   terraform-apply:
     service_id: pipeline
     parameters:
