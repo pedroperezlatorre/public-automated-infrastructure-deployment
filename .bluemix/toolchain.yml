@@ -10,7 +10,7 @@ template:
     # note: `repository` url param must always be provided while the `branch` url param is optional
     # the computed urls are of the same format as the original static urls shown above
     git url: >
-      [{{repository}}]({{repository}})
+      [{repository}]({repository})
     git branch: >
       [{{branch}}]({{repository}}/tree/{{branch}})
 toolchain:
