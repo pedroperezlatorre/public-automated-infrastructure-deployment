@@ -15,25 +15,19 @@ template:
       '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')'
 toolchain:
   name: "{{toolchain_name}}"
-  #template:
-  #  getting_started:
-  #    $ref: "#/messages/template.gettingStarted"
 services:
   terraform-repo:
     service_id: >
       $env.source_provider ? $env.source_provider : 'github_integrated'
     parameters:
       repo_name: "{{toolchain.name}}"
-      # repo_url: >
-      #   $env.type === 'link' ? 
+      # source_repo_url: >
+      #   $env.type === 'fork' || $env.type === 'clone' ? 
       #     $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
-      source_repo_url: >
-        $env.type === 'fork' || $env.type === 'clone' ? 
-          $env.app_repo : 'https://github.com/Cloud-Schematics/cluster'
       type: $env.type || 'link'
       has_issues: true
       enable_traceability: true
-      legal: true
+      legal: true # 'I Undertand' checkbox
       repo_url: $env.repository
   terraform-apply:
     service_id: pipeline
