@@ -1,4 +1,4 @@
-# entreno-mapfre-fac-initial-plataforma
+# Initial Deployment
 Initial deployment of the toolchain
 
 ```
@@ -7,7 +7,7 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &branch=<INITIAL-REPO-BRANCH>
 &repository_token=<INITIAL-REPO-TOKEN>
 &toolchain_name=<INITIAL-TOOLCHAIN-NAME>
-&type=link
+&type=<REPOSITORY-TYPE>
 &cluster_resource_group=<CLUSTER-RESOURCEGROUP>
 &cluster_name=<CLUSTER-NAME>
 &cluster_namespace=<CLUSTER-NAMESPACE>
@@ -21,3 +21,10 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &source_provider=<GIT-PROVIDER>
 &customer=<CUSTOMER-NAME>
 ```
+
+- **IBM-REGION**
+- **INITIAL-REPO-URL**
+- **INITIAL-REPO-BRANCH**
+- **INITIAL-REPO-TOKEN**
+- **INITIAL-TOOLCHAIN-NAME**
+- **REPOSITORY-TYPE**: 'link' for Existing
