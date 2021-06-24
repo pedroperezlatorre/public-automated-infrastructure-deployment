@@ -17,7 +17,7 @@ properties:
     value: ${CUSTOMER}
     type: text
 stages:
-  - name: CREATE/UPDATE
+  - name: CREATE/UPDATE SCHEMATICS WS
     inputs:
       - type: git
         service: ${GIT_REPO}
@@ -29,7 +29,7 @@ stages:
         value: ${REPOSITORY_ACCESS_TOKEN}
         type: secure
     jobs:
-      - name: "Create/Update Workspace"
+      - name: "Create/Update Schematics Workspace"
         type: builder
         artifact_dir: ""
         build_type: shell
