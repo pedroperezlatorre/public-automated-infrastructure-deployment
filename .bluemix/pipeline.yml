@@ -92,7 +92,7 @@ stages:
     inputs:
       - type: job
         stage: CREATE/UPDATE
-        job: "Create/Update Workspace"
+        job: "Create/Update Schematics Workspace"
     triggers:
       - type: stage
     properties:
@@ -226,7 +226,7 @@ stages:
           done
 
           ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
-  - name: INFRASTRUCTURE TOOLCHAIN
+  - name: INFRASTRUCTURE TOOLCHAIN CREATION
     inputs:
       - type: job
         stage: APPLY
