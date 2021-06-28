@@ -44,3 +44,14 @@ variable "default_cd_plan" {
   description = "continuous delivery plan of the default resource group"
   type        = string
 }
+
+##############################################################################
+# COS Variables
+##############################################################################
+
+variable cos_plan {
+  description = "ibm cloud object storage plan"
+  default     = "standard"
+}
+
+##############################################################################

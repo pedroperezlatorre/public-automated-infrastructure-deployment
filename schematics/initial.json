@@ -48,6 +48,11 @@
             "name": "unique_id",
             "value": "customer_placeholder",
             "type": "string"
+          },
+          {
+          "name": "cos_plan",
+          "value": "standard",
+          "type": "string"
           }
         ]
       }
