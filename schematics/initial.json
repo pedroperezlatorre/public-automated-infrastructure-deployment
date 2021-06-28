@@ -19,9 +19,9 @@
             "type": "string"
           },
           {
-            "name": "resource_groups_names",
-            "value": "[\"customer_placeholder\"]",
-            "type": "list"
+            "name": "resource_groups_name",
+            "value": "customer_placeholder",
+            "type": "string"
           },
           {
             "name": "infrastructure_resource_groups_names",
