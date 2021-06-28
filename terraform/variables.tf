@@ -30,10 +30,10 @@ variable "resource_groups_names" {
   type        = list(string)
 }
 
-variable "pipelines_resource_group_name" {
-  description = " the name of the cd resource group"
-  type        = string
-}
+# variable "pipelines_resource_group_name" {
+#   description = " the name of the cd resource group"
+#   type        = string
+# }
 
 variable "resource_group_cd_plan" {
   description = "the continuous delivery plan of the cd resource group to be created"

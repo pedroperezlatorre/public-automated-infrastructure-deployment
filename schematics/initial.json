@@ -20,13 +20,8 @@
           },
           {
             "name": "resource_groups_names",
-            "value": "[\"customer_placeholder\",\"customer_placeholder-cd\"]",
+            "value": "[\"customer_placeholder\"]",
             "type": "list"
-          },
-          {
-            "name": "pipelines_resource_group_name",
-            "value": "customer_placeholder-cd",
-            "type": "string"
           },
           {
             "name": "infrastructure_resource_groups_names",
