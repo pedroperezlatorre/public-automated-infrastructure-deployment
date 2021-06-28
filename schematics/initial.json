@@ -53,6 +53,11 @@
           "name": "cos_plan",
           "value": "standard",
           "type": "string"
+          },
+          {
+          "name": "ibm_region",
+          "value": "region_placeholder",
+          "type": "string"
           }
         ]
       }
