@@ -91,7 +91,7 @@ stages:
   - name: PLAN
     inputs:
       - type: job
-        stage: CREATE/UPDATE
+        stage: CREATE/UPDATE SCHEMATICS WS
         job: "Create/Update Schematics Workspace"
     triggers:
       - type: stage
