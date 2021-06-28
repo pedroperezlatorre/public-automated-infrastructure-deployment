@@ -25,9 +25,9 @@ variable "resource_groups_count" {
   type        = string
 }
 
-variable "resource_groups_names" {
-  description = "list with the name of the resource groups to be created"
-  type        = list(string)
+variable "resource_groups_name" {
+  description = "The name of the resource groups to be created"
+  type        = string
 }
 
 # variable "pipelines_resource_group_name" {
