@@ -58,6 +58,16 @@
           "name": "ibm_region",
           "value": "region_placeholder",
           "type": "string"
+          },
+          {
+          "name": "db2_plan",
+          "value": "standard",
+          "type": "string"
+          },
+          {
+          "name": "db2_key_role",
+          "value": "Manager",
+          "type": "string"
           }
         ]
       }
