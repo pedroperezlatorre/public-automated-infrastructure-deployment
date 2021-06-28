@@ -57,14 +57,14 @@ stages:
           sed -i "s/customer_placeholder/$CUSTOMER/g" ./schematics/initial.json
 
 
-          CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
-          TAGS_CD=$(echo $CONTINUOUS_DELIVERY | jq ".items[0].tags")
-          TAGS_CD_LENGTH=$(echo $CONTINUOUS_DELIVERY | jq ".items | length")
+          # CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
+          # TAGS_CD=$(echo $CONTINUOUS_DELIVERY | jq ".items[0].tags")
+          # TAGS_CD_LENGTH=$(echo $CONTINUOUS_DELIVERY | jq ".items | length")
 
-          if [[ "$TAGS_CD_LENGTH" !=  "0" ]] && [[ ! ${TAGS_CD[*]} =~ schematics ]]
-          then
-            ibmcloud resource service-instance-delete "Continuous Delivery" -f
-          fi
+          # if [[ "$TAGS_CD_LENGTH" !=  "0" ]] && [[ ! ${TAGS_CD[*]} =~ schematics ]]
+          # then
+          #   ibmcloud resource service-instance-delete "Continuous Delivery" -f
+          # fi
 
           WORKSPACE_NAME=$(cat ./schematics/initial.json | jq ".name")
           WORKSPACE_ID=$(ibmcloud schematics workspace list --json | jq ".workspaces | select (. != null) | .[] | select ( .name == $WORKSPACE_NAME ) .id" | sed -e 's/^"//' -e 's/"$//')
@@ -226,100 +226,100 @@ stages:
           done
 
           ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
-  - name: INFRASTRUCTURE TOOLCHAIN CREATION
-    inputs:
-      - type: job
-        stage: APPLY
-        job: "Terraform Apply"
-    triggers:
-      - type: stage
-    properties:
-      - name: properties
-        value: build.properties
-        type: file
-      - name: INFRASTRUCTURE_TOOLCHAIN_NAME
-        value: alr-terraform-infrastructure
-        type: text
-      - name: TEMPLATE_REPO_LIST
-        value: ${TEMPLATE_REPO_LIST}
-        type: text
-      - name: TEMPLATE_REPO_TOKEN
-        value: ${TEMPLATE_REPO_TOKEN}
-        type: secure
-      - name: TEMPLATE_REPO_BRANCH
-        value: ${TEMPLATE_REPO_BRANCH}
-        type: text
-      - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST
-        value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST}
-        type: text
-      - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN
-        value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN}
-        type: secure
-      - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH
-        value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH}
-        type: text
-      - name: REGION_ID
-        value: ${REGION_ID}
-        type: text
-    jobs:
-      - name: "Terraform Infrastructure Toolchain"
-        type: builder
-        artifact_dir: ""
-        build_type: shell
-        script: |
-          #!/bin/bash
+  # - name: INFRASTRUCTURE TOOLCHAIN CREATION
+  #   inputs:
+  #     - type: job
+  #       stage: APPLY
+  #       job: "Terraform Apply"
+  #   triggers:
+  #     - type: stage
+  #   properties:
+  #     - name: properties
+  #       value: build.properties
+  #       type: file
+  #     - name: INFRASTRUCTURE_TOOLCHAIN_NAME
+  #       value: alr-terraform-infrastructure
+  #       type: text
+  #     - name: TEMPLATE_REPO_LIST
+  #       value: ${TEMPLATE_REPO_LIST}
+  #       type: text
+  #     - name: TEMPLATE_REPO_TOKEN
+  #       value: ${TEMPLATE_REPO_TOKEN}
+  #       type: secure
+  #     - name: TEMPLATE_REPO_BRANCH
+  #       value: ${TEMPLATE_REPO_BRANCH}
+  #       type: text
+  #     - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST
+  #       value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST}
+  #       type: text
+  #     - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN
+  #       value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN}
+  #       type: secure
+  #     - name: TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH
+  #       value: ${TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH}
+  #       type: text
+  #     - name: REGION_ID
+  #       value: ${REGION_ID}
+  #       type: text
+  #   jobs:
+  #     - name: "Terraform Infrastructure Toolchain"
+  #       type: builder
+  #       artifact_dir: ""
+  #       build_type: shell
+  #       script: |
+  #         #!/bin/bash
 
-          set -x
-
-
-          IFS=, read -ra template_repo_list <<<"$TEMPLATE_REPO_LIST" 
-          IFS=, read -ra toolchain_config_template_repo_list <<<"$TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST" 
+  #         set -x
 
 
-          IFS=, read -ra ary <<<"$RESOURCE_GROUPS_NAMES" 
-          for key in "${!ary[@]}"; do 
+  #         IFS=, read -ra template_repo_list <<<"$TEMPLATE_REPO_LIST" 
+  #         IFS=, read -ra toolchain_config_template_repo_list <<<"$TOOLCHAIN_CONFIG_TEMPLATE_REPO_LIST" 
 
-          RESOURCE_GROUP_NAME=${ary[$key]}
-          TEMPLATE_REPO=${template_repo_list[$key]}
-          TOOLCHAIN_CONFIG_TEMPLATE_REPO=${toolchain_config_template_repo_list[$key]}
 
-          # force login
-          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME -g $PIPELINES_RESOURCE_GROUP_NAME
+  #         IFS=, read -ra ary <<<"$RESOURCE_GROUPS_NAMES" 
+  #         for key in "${!ary[@]}"; do 
 
-          RESOURCE_GROUP_ID=$(ibmcloud resource groups --output json | jq ".[] | select (.name == \"$PIPELINES_RESOURCE_GROUP_NAME\") .id" | sed -e 's/^"//' -e 's/"$//')
-          INFRASTRUCTURE_RESOURCE_GROUP_ID=$(ibmcloud resource groups --output json | jq ".[] | select (.name == \"$RESOURCE_GROUP_NAME\") .id" | sed -e 's/^"//' -e 's/"$//')
+  #         RESOURCE_GROUP_NAME=${ary[$key]}
+  #         TEMPLATE_REPO=${template_repo_list[$key]}
+  #         TOOLCHAIN_CONFIG_TEMPLATE_REPO=${toolchain_config_template_repo_list[$key]}
 
-          IAM_TOKEN=$(ibmcloud iam oauth-tokens | sed 's/^.*Bearer //g')
+  #         # force login
+  #         ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME -g $PIPELINES_RESOURCE_GROUP_NAME
 
-          RESULT=$(ibmcloud dev toolchain-get $INFRASTRUCTURE_TOOLCHAIN_NAME)
+  #         RESOURCE_GROUP_ID=$(ibmcloud resource groups --output json | jq ".[] | select (.name == \"$PIPELINES_RESOURCE_GROUP_NAME\") .id" | sed -e 's/^"//' -e 's/"$//')
+  #         INFRASTRUCTURE_RESOURCE_GROUP_ID=$(ibmcloud resource groups --output json | jq ".[] | select (.name == \"$RESOURCE_GROUP_NAME\") .id" | sed -e 's/^"//' -e 's/"$//')
 
-          if [[ $RESULT == *"The toolchain does not exist or is not valid"* ]]; then
-              TOOLCHAIN_EXISTS=0
-          else 
-              TOOLCHAIN_EXISTS=1
-          fi
+  #         IAM_TOKEN=$(ibmcloud iam oauth-tokens | sed 's/^.*Bearer //g')
 
-          if [[ "$TOOLCHAIN_EXISTS" == "0" ]];
-          then 
-            CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&branch=$TEMPLATE_REPO_BRANCH&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
-            elif [[ "$FORCE_DELETE" == "1" ]];
-          then
-              ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME 
+  #         RESULT=$(ibmcloud dev toolchain-get $INFRASTRUCTURE_TOOLCHAIN_NAME)
 
-              set -x
-              CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&branch=$TEMPLATE_REPO_BRANCH&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
-              set +x
+  #         if [[ $RESULT == *"The toolchain does not exist or is not valid"* ]]; then
+  #             TOOLCHAIN_EXISTS=0
+  #         else 
+  #             TOOLCHAIN_EXISTS=1
+  #         fi
+
+  #         if [[ "$TOOLCHAIN_EXISTS" == "0" ]];
+  #         then 
+  #           CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&branch=$TEMPLATE_REPO_BRANCH&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
+  #           elif [[ "$FORCE_DELETE" == "1" ]];
+  #         then
+  #             ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME 
+
+  #             set -x
+  #             CURL_RESULT=$(curl -X POST -H "Authorization: Bearer $IAM_TOKEN" -d "repository=$TEMPLATE_REPO&branch=$TEMPLATE_REPO_BRANCH&repository_token=$TEMPLATE_REPO_TOKEN&autocreate=true&resourceGroupId=$RESOURCE_GROUP_ID&infrastructureResourceGroupId=$INFRASTRUCTURE_RESOURCE_GROUP_ID&apiKey=$API_KEY&env_id=$REGION_ID&toolchain_name=$INFRASTRUCTURE_TOOLCHAIN_NAME&type=link&toolchain_configuration_repository=$TOOLCHAIN_CONFIG_TEMPLATE_REPO&toolchain_configuration_repository_token=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_TOKEN&initial_workspace_id=$WORKSPACE_ID&region_name=$REGION_NAME&customer=$CUSTOMER&toolchain_configuration_repository_branch=$TOOLCHAIN_CONFIG_TEMPLATE_REPO_BRANCH" -k https://cloud.ibm.com/devops/setup/deploy?env_id=$REGION_ID)
+  #             set +x
               
-          else 
-              echo "Toolchain already created, run:"
-              echo "ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME"
-              echo "To delete it and then run this script again to create it"
-          fi
+  #         else 
+  #             echo "Toolchain already created, run:"
+  #             echo "ibmcloud dev toolchain-delete $INFRASTRUCTURE_TOOLCHAIN_NAME"
+  #             echo "To delete it and then run this script again to create it"
+  #         fi
 
-          if [[ $CURL_RESULT == *"\"status\":\"error\""* ]];
-          then
-              echo $CURL_RESULT
-              exit 1
-          fi
+  #         if [[ $CURL_RESULT == *"\"status\":\"error\""* ]];
+  #         then
+  #             echo $CURL_RESULT
+  #             exit 1
+  #         fi
 
-          done
+  #         done
