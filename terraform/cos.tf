@@ -5,7 +5,7 @@
 resource ibm_resource_instance cos {
   name              = "${var.unique_id}-cos"
   service           = "cloud-object-storage"
-  plan              = "${var.cos_plan}"
+  plan              = var.cos_plan
   location          = "global"
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = ["iks-on-vpc"]
