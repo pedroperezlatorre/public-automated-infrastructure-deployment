@@ -114,3 +114,27 @@ variable cidr_blocks {
 }
 
 ##############################################################################
+
+##############################################################################
+# Cluster Variables
+##############################################################################
+#variable "cluster_name" {
+#  description = "Name for the IKS cluster"
+#}
+
+variable "machine_type" {
+  description = "Machine type for the IKS Cluster"
+  default     = "bx2.2x8"
+}
+
+variable "worker_count" {
+  description = "Number of workers per zone"
+  default     = 1
+}
+
+variable "kube_version" {
+  description = "Version of the IKS Cluster"
+  default     = "1.20.7"
+}
+
+##############################################################################

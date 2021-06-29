@@ -88,6 +88,21 @@
             "name": "cidr_blocks",
             "value": "[\"10.10.10.0/24\", \"10.10.11.0/24\", \"10.10.12.0/24\"]",
             "type": "list"
+          },
+          {
+          "name": "machine_type",
+          "value": "bx2.2x8",
+          "type": "string"
+          },
+          {
+          "name": "worker_count",
+          "value": 1,
+          "type": "number"
+          },
+          {
+          "name": "kube_version",
+          "value": "1.20.7",
+          "type": "string"
           }
         ]
       }
