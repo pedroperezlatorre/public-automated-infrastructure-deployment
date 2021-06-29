@@ -109,22 +109,27 @@ stages:
 
           set -x
 
-          waitForCompletion () {
-            ACTIVITY = $1
-            WORKSPACE_ID = $2
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
 
-            # get rid of trailing "OK" if found
-            if [[ $ACTIVITY == *OK ]]; then
-             ACTIVITY=${ACTIVITY%??}
-            fi
+          # Refresh Cloud status to schematics
+          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
 
-            ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
-            echo "Activity ID   $ACTIVITY_ID"
+          # run schematics plan
+          ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)
 
-            # poll until status is no longer INPROGRESS, or if there is an error
-            while :
-            do
-              STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
+          # get rid of trailing "OK" if found
+          if [[ $ACTIVITY == *OK ]]; then
+            ACTIVITY=${ACTIVITY%??}
+          fi
+
+          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          echo "Activity ID   $ACTIVITY_ID"
+
+          # poll until status is no longer INPROGRESS, or if there is an error
+          while :
+          do
+            STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
             
             RET_VAL=$?
             if [ $RET_VAL -ne 0 ]; then
@@ -152,22 +157,6 @@ stages:
             sleep 5
           done
 
-
-          }
-
-          # MAIN PROCEDURE #
-          ##################
-          # force login (required by schematics cli)
-          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
-
-          # Refresh Cloud status to schematics
-          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
-          waitForCompletion $ACTIVITY $WORKSPACE_ID
-
-          # run schematics plan
-          ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)
-          waitForCompletion $ACTIVITY $WORKSPACE_ID
-          
           ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
   - name: APPLY
     inputs:
