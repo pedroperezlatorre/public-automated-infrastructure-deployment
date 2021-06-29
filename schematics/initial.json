@@ -81,13 +81,13 @@
           },
           {
           "name": "w_studio_plan",
-          "value": "standard",
-          "type": "free-v1"
+          "value": "free-v1",
+          "type": "string"
           },
           {
           "name": "wml_plan",
-          "value": "standard",
-          "type": "lite"
+          "value": "lite",
+          "type": "string"
           }
         ]
       }
