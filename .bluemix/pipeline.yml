@@ -113,7 +113,7 @@ stages:
           ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
 
           # Refresh Cloud status to schematics
-          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json --force)
+          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
 
           # run schematics plan
           ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)
@@ -186,7 +186,7 @@ stages:
           ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
 
           # Refresh Cloud status to schematics
-          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json --force)
+          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
 
           # run schematics apply
           ACTIVITY=$(ibmcloud schematics apply --id $WORKSPACE_ID --json --force)
