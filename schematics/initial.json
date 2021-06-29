@@ -68,6 +68,16 @@
           "name": "db2_key_role",
           "value": "Manager",
           "type": "string"
+          },
+          {
+          "name": "cloudant_plan",
+          "value": "standard",
+          "type": "string"
+          },
+          {
+          "name": "cloudant_key_role",
+          "value": "Manager",
+          "type": "string"
           }
         ]
       }

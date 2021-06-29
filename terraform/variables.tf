@@ -69,3 +69,17 @@ variable db2_key_role {
   default     = "Manager"
 }
 ##############################################################################
+
+##############################################################################
+# Cloudant Variables
+##############################################################################
+variable cloudant_plan {
+  description = "Cloudant plan"
+  default     = "standard"
+}
+
+variable cloudant_key_role {
+  description = "Cloudant Key Role"
+  default     = "Manager"
+}
+##############################################################################
