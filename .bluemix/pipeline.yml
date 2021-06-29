@@ -110,41 +110,49 @@ stages:
           set -x
 
           waitForCompletion () {
-            ACTIVITY_ID=$1
-            WORKSPACE_ID=$2
+            ACTIVITY = $1
+            WORKSPACE_ID = $2
+
+            # get rid of trailing "OK" if found
+            if [[ $ACTIVITY == *OK ]]; then
+             ACTIVITY=${ACTIVITY%??}
+            fi
+
+            ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+            echo "Activity ID   $ACTIVITY_ID"
 
             # poll until status is no longer INPROGRESS, or if there is an error
             while :
             do
               STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
             
-              RET_VAL=$?
-              if [ $RET_VAL -ne 0 ]; then
+            RET_VAL=$?
+            if [ $RET_VAL -ne 0 ]; then
 
-                echo $STATUS
-                exit $RET_VAL
-              else
+              echo $STATUS
+              exit $RET_VAL
+            else
 
-                # get rid of trailing "OK" if found
-                if [[ $STATUS == *OK ]]; then
-                  STATUS=${STATUS%??}
-                fi
-                STATUS_VALUE=$(echo $STATUS | jq -r ".status")
-                echo "Polling for status: $STATUS_VALUE"
-
-                if [ "$STATUS_VALUE" = "FAILED" ]; then 
-                  ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
-                  exit 1
-                elif [ "$STATUS_VALUE" != "INPROGRESS" ] && [ "$STATUS_VALUE" != "CREATED" ]; then  
-                  break
-                fi
+              # get rid of trailing "OK" if found
+              if [[ $STATUS == *OK ]]; then
+                STATUS=${STATUS%??}
               fi
+              STATUS_VALUE=$(echo $STATUS | jq -r ".status")
+              echo "Polling for status: $STATUS_VALUE"
 
-              # sleep for 5 seconds, while waiting for completion
-              sleep 5
-            done
+              if [ "$STATUS_VALUE" = "FAILED" ]; then 
+                ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+                exit 1
+              elif [ "$STATUS_VALUE" != "INPROGRESS" ] && [ "$STATUS_VALUE" != "CREATED" ]; then  
+                break
+              fi
+            fi
 
-            return 0
+            # sleep for 5 seconds, while waiting for completion
+            sleep 5
+          done
+
+
           }
 
           # MAIN PROCEDURE #
@@ -154,30 +162,13 @@ stages:
 
           # Refresh Cloud status to schematics
           ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
-          # get rid of trailing "OK" if found
-          if [[ $ACTIVITY == *OK ]]; then
-            ACTIVITY=${ACTIVITY%??}
-          fi
-          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
-          echo "Activity ID   $ACTIVITY_ID"
-          
-          waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
-          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+          waitForCompletion $ACTIVITY $WORKSPACE_ID
 
-
-          # Run schematics plan
+          # run schematics plan
           ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)
-          # get rid of trailing "OK" if found
-          if [[ $ACTIVITY == *OK ]]; then
-            ACTIVITY=${ACTIVITY%??}
-          fi
-          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
-          echo "Activity ID   $ACTIVITY_ID"
+          waitForCompletion $ACTIVITY $WORKSPACE_ID
           
-          waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
           ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
-
-          exit 0
   - name: APPLY
     inputs:
       - type: job
