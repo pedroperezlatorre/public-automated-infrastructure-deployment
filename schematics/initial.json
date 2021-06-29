@@ -78,6 +78,16 @@
           "name": "cloudant_key_role",
           "value": "Manager",
           "type": "string"
+          },
+          {
+          "name": "w_studio_plan",
+          "value": "standard",
+          "type": "free-v1"
+          },
+          {
+          "name": "wml_plan",
+          "value": "standard",
+          "type": "lite"
           }
         ]
       }
