@@ -152,17 +152,17 @@ stages:
           # force login (required by schematics cli)
           ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
 
-          # Refresh Cloud status to schematics
-          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
-          # get rid of trailing "OK" if found
-          if [[ $ACTIVITY == *OK ]]; then
-            ACTIVITY=${ACTIVITY%??}
-          fi
-          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
-          echo "Activity ID   $ACTIVITY_ID"
+          # # Refresh Cloud status to schematics
+          # ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
+          # # get rid of trailing "OK" if found
+          # if [[ $ACTIVITY == *OK ]]; then
+          #   ACTIVITY=${ACTIVITY%??}
+          # fi
+          # ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          # echo "Activity ID   $ACTIVITY_ID"
           
-          waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
-          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+          # waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
+          # ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
 
 
           # Run schematics plan
