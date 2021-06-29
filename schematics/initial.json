@@ -24,11 +24,6 @@
             "type": "string"
           },
           {
-            "name": "infrastructure_resource_groups_names",
-            "value": "[\"customer_placeholder\"]",
-            "type": "list"
-          },
-          {
             "name": "resource_group_cd_plan",
             "value": "lite",
             "type": "string"
