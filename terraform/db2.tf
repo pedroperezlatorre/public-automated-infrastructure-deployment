@@ -4,6 +4,12 @@ resource "ibm_resource_instance" "db2_instance" {
   plan              = var.db2_plan
   location          = var.ibm_region
   resource_group_id = ibm_resource_group.resource_group.id
+  
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
 }
 
 resource "ibm_resource_key" "db2_key" {
