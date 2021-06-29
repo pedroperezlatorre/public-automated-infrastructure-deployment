@@ -9,7 +9,7 @@
 
 resource ibm_is_network_acl network_acl {
   name = "${var.unique_id}-acl"
-  vpc  = "${ibm_is_vpc.vpc.id}"
+  vpc  = ibm_is_vpc.vpc.id
   rules {
       name   = "egress"
       action = "allow"
