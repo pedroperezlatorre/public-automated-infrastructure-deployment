@@ -91,7 +91,7 @@
           },
           {
           "name": "machine_type",
-          "value": "bx2.2x8",
+          "value": "bx2.4x16",
           "type": "string"
           },
           {
