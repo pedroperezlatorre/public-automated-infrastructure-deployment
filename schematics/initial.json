@@ -1,5 +1,5 @@
 {
-    "name": "customer_placeholderInfra",
+    "name": "customer_placeholder-Infra",
     "location": "region_placeholder",
     "type": ["terraform_v0.14"],
     "description": "Resource groups and continuous delivery",
@@ -96,7 +96,7 @@
           },
           {
           "name": "worker_count",
-          "value": 1,
+          "value": "1",
           "type": "number"
           },
           {
