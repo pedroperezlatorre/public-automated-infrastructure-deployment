@@ -101,7 +101,7 @@
           },
           {
           "name": "kube_version",
-          "value": "1.20.7",
+          "value": "4.6.34_openshift",
           "type": "string"
           }
         ]

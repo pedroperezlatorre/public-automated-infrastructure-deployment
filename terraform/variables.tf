@@ -134,7 +134,7 @@ variable "worker_count" {
 
 variable "kube_version" {
   description = "Version of the IKS Cluster"
-  default     = "1.20.7"
+  default     = "1.20.8"
 }
 
 ##############################################################################

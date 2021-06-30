@@ -32,7 +32,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
  #kube_version      = "1.20.7"
  
  # OpenShift (OCP)
- kube_version      = "4.6.28_openshift"
+ kube_version      = var.kube_version
  entitlement       = "cloud_pak"
  cos_instance_crn  = ibm_resource_instance.cos.id
 
