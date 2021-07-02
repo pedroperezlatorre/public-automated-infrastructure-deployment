@@ -51,4 +51,6 @@ It is composed by three stages:
    2. Create an execution **Plan** for that schematics workspace: Plan changes found in [./terraform folder](./terraform)
    3. **Apply** the execution plan of the schematics workspace: Apply changes previously planed.
 
+![Pipeline Execution](./images/pipelineExecution.png)
+
 When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
