@@ -41,11 +41,14 @@ This procedure will access to the [.bluemix folder](./.bluemix) in the repo, to 
 
 In this particular case it is configured to create a toolchain with two elements:
 1. Access to **GitHub repo** and detect new commits.
-2. **Pipeline**, trigered by a commit in the repo, which is composed by three stages:
-   1. Create/Update an **Schematics** workspace.
-   2. Create an execution **Plan** for that schematics workspace.
-   3. **Apply** the execution plan of the schematics workspace.
+2. **Pipeline**, trigered by a commit in the repo.
 
 ## 2. Pipeline
-When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
 
+The pipeline is where the actions over the cloud will be performed.
+It is composed by three stages:
+   1. Create/Update an **Schematics** workspace: Applies changes found in [./schematics/initial.json](./schematics/initial.json)
+   2. Create an execution **Plan** for that schematics workspace: Plan changes found in [./terraform folder](./terraform)
+   3. **Apply** the execution plan of the schematics workspace: Apply changes previously planed.
+
+When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
