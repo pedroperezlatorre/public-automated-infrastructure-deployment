@@ -11,7 +11,7 @@ The repo must contain at least the following three folders:
 3. [terraform](./terraform): Cloud objects to be created.
 ## 1. Toolchain creation
 You can create this entire architecture with only 1 click.
-The only thing you must do is fill the following URL with the specific params of your project:
+The only thing you must do is fill the following **URL** with the specific params of your project:
 ```
 https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &region_name=<IBM-REGION>
