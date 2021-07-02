@@ -11,6 +11,7 @@ variable ibmcloud_api_key {
     description = "IBM Cloud access credentials"
     type        = string
 }
+##############################################################################
 
 ##############################################################################
 # Unique variables
@@ -30,11 +31,6 @@ variable "resource_groups_name" {
   type        = string
 }
 
-# variable "pipelines_resource_group_name" {
-#   description = " the name of the cd resource group"
-#   type        = string
-# }
-
 variable "resource_group_cd_plan" {
   description = "the continuous delivery plan of the cd resource group to be created"
   type        = string
@@ -44,16 +40,13 @@ variable "default_cd_plan" {
   description = "continuous delivery plan of the default resource group"
   type        = string
 }
-
 ##############################################################################
 # COS Variables
 ##############################################################################
-
 variable cos_plan {
   description = "ibm cloud object storage plan"
   default     = "standard"
 }
-
 ##############################################################################
 
 ##############################################################################
@@ -91,7 +84,6 @@ variable w_studio_plan {
   description = "Watson Studio plan"
   default     = "free-v1"
 }
-
 ##############################################################################
 
 ##############################################################################
@@ -101,7 +93,6 @@ variable wml_plan {
   description = "Watson Machine Learning plan"
   default     = "lite"
 }
-
 ##############################################################################
 
 ##############################################################################
@@ -118,9 +109,6 @@ variable cidr_blocks {
 ##############################################################################
 # Cluster Variables
 ##############################################################################
-#variable "cluster_name" {
-#  description = "Name for the IKS cluster"
-#}
 
 variable "machine_type" {
   description = "Machine type for the IKS Cluster"
@@ -136,5 +124,4 @@ variable "kube_version" {
   description = "Version of the IKS Cluster"
   default     = "1.20.8"
 }
-
 ##############################################################################
