@@ -53,3 +53,7 @@ The pipeline is where the actions over the cloud will be performed. It is triger
 When the execution plan is applied by **Schematics**, it creates all the clould objects specified inside [./terraform folder](./terraform):
 ![Pipeline Execution](./images/pipelineExecution.png)
 
+
+## BONUS TRACK: How to inject variables from URL params to Terraform templates 
+
+*PENDING TO BE DONE*
