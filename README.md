@@ -1,4 +1,4 @@
-# Infrastructure Toolchain CI/CD Deployment
+# IaC Toolchain CI/CD Deployment
 Initial deployment of the toolchain
 
 ```
