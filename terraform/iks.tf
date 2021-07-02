@@ -1,16 +1,12 @@
 ###################################################################################################
 # Creates the IKS Cluster
 #
-# Depends on:
-#    schematics.tf - provides the output data from the 01-groups and 02-vpc Schematics workspaces
-#
 # Requires:
 #   See provider.tf
 #       variables.tf
 #
 # Creates: 
 #   Creates an IKS cluster (ibm_container_vpc_cluster.cluster) and 
-#   Container Registry ( ibm_resource_instance.docker_registry) in the VPC Cluster
 #    
 # Outputs: 
 #  see outputs.tf
