@@ -10,6 +10,8 @@ With this repository you will create a toolchain with two elements:
 When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
 
 ## The procedure
+
+![Complete infra deployment](./images/toolchainInfraDeploy.png)
 ### 1. Toolchain creation
 In order to automatically create a toolchain
 ```
