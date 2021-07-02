@@ -9,8 +9,9 @@ With this repository you will create a toolchain with two elements:
 
 When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
 
-## 
-
+## The procedure
+### 1. Toolchain creation
+In order to automatically create a toolchain
 ```
 https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &region_name=<IBM-REGION>
