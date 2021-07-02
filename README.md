@@ -39,7 +39,7 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 This procedure will access to the [.bluemix folder](./.bluemix) in the repo, to read the Toolchain config file [toolchain.yml](./.bluemix/toolchain.yml) and show you a toolchain creation web completely filled, waiting only a human action to confirm:
 ![toolchain creation web](./images/toolchainCreationWeb.png)
 
-In this case it is configured to create a toolchain with two elements:
+In this particular case it is configured to create a toolchain with two elements:
 1. Access to **GitHub repo** and detect new commits.
 2. **Pipeline**, trigered by a commit in the repo, which is composed by three stages:
    1. Create/Update an **Schematics** workspace.
