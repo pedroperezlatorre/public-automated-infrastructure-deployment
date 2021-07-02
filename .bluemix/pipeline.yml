@@ -56,16 +56,6 @@ stages:
           # Set the Customer name
           sed -i "s/customer_placeholder/$CUSTOMER/g" ./schematics/initial.json
 
-
-          # CONTINUOUS_DELIVERY=$(ibmcloud resource search "name:\"Continuous Delivery\"" --output json)
-          # TAGS_CD=$(echo $CONTINUOUS_DELIVERY | jq ".items[0].tags")
-          # TAGS_CD_LENGTH=$(echo $CONTINUOUS_DELIVERY | jq ".items | length")
-
-          # if [[ "$TAGS_CD_LENGTH" !=  "0" ]] && [[ ! ${TAGS_CD[*]} =~ schematics ]]
-          # then
-          #   ibmcloud resource service-instance-delete "Continuous Delivery" -f
-          # fi
-
           WORKSPACE_NAME=$(cat ./schematics/initial.json | jq ".name")
           WORKSPACE_ID=$(ibmcloud schematics workspace list --json | jq ".workspaces | select (. != null) | .[] | select ( .name == $WORKSPACE_NAME ) .id" | sed -e 's/^"//' -e 's/"$//')
 
