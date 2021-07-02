@@ -1,5 +1,4 @@
 # IaC Toolchain CI/CD Deployment
-Initial deployment of the toolchain
 
 With this repository you will create a toolchain with two elements:
 1. Access to **GitHub repo** and detect new commits.
@@ -7,6 +6,10 @@ With this repository you will create a toolchain with two elements:
    1. Create/Update an **Schematics** workspace.
    2. Create an execution **Plan** for that schematics workspace.
    3. **Apply** the execution plan of the schematics workspace.
+
+When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
+
+## 
 
 ```
 https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
