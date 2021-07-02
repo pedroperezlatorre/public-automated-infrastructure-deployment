@@ -1,8 +1,5 @@
 ########################################################################################
-# 02-vpc  Creates the VPC network 
-#
-# Depends on:
-#    schematics.tf - provides the output data from the 01-groups Schematics workspace
+# Creates the VPC network 
 #
 # Requires:
 #   See provider.tf
