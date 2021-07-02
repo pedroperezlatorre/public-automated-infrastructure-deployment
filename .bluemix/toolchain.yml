@@ -1,6 +1,6 @@
 version: "2"
 template:
-  name: "Schematics Infrastructure as Code Toolchain"
+  name: "Schematics IaC Toolchain"
   description: "Prototype toolchain templates for IBM Cloud Schematics "
   required:
     - terraform-apply
