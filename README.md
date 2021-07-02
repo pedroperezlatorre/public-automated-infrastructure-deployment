@@ -32,6 +32,7 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 
 
 This URL will access the repo to read the file [Toolchain config file](./.bluemix/toolchain.yml).
+
 In this case it is configured to create a toolchain with two elements:
 1. Access to **GitHub repo** and detect new commits.
 2. **Pipeline**, trigered by a commit in the repo, which is composed by three stages:
@@ -39,5 +40,6 @@ In this case it is configured to create a toolchain with two elements:
    2. Create an execution **Plan** for that schematics workspace.
    3. **Apply** the execution plan of the schematics workspace.
 
+## 2. Pipeline
 When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
 
