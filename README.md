@@ -4,6 +4,11 @@ This repository is an example of how you can create a full CI/CD cloud architect
 
 ![Complete infra deployment](./images/toolchainInfraDeploy.png)
 
+## 0. Repository structure
+The repo must contain at least the following three folders:
+1. [.bluemix](./.bluemix): Toolchain configuration files.
+2. [schematics](./schematics): Schematics config file & initial values of terraform variables.
+3. [terraform](./terraform): Cloud objects to be created.
 ## 1. Toolchain creation
 You can create this entire architecture with only 1 click.
 The only thing you must do is fill the following URL with the specific params of your project:
