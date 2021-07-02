@@ -45,8 +45,7 @@ In this particular case it is configured to create a toolchain with two elements
 
 ## 2. Pipeline
 
-The pipeline is where the actions over the cloud will be performed.
-It is composed by three stages:
+The pipeline is where the actions over the cloud will be performed. It is trigered by a commit in the repo, and it perform three chained actions sequentially:
    1. Create/Update an **Schematics** workspace: Applies changes found in [./schematics/initial.json](./schematics/initial.json)
    2. Create an execution **Plan** for that schematics workspace: Plan changes found in [./terraform folder](./terraform)
    3. **Apply** the execution plan of the schematics workspace: Apply changes previously planed.
