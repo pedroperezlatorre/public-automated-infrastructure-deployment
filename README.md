@@ -31,7 +31,7 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 - **CUSTOMER-NAME**: Prefix name for every new cloud objects.
 
 
-This URL will access the repo to read the file [Toolchain config file](./.bluemix/toolchain.yml).
+This procedure will access to the [.bluemix folder](./.bluemix) in the repo, to read the Toolchain config file [toolchain.yml](./.bluemix/toolchain.yml).
 
 In this case it is configured to create a toolchain with two elements:
 1. Access to **GitHub repo** and detect new commits.
