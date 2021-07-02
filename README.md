@@ -1,19 +1,12 @@
 # IaC Toolchain CI/CD Deployment
 
-With this repository you will create a toolchain with two elements:
-1. Access to **GitHub repo** and detect new commits.
-2. **Pipeline**, trigered by a commit in the repo, which is composed by three stages:
-   1. Create/Update an **Schematics** workspace.
-   2. Create an execution **Plan** for that schematics workspace.
-   3. **Apply** the execution plan of the schematics workspace.
-
-When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
-
-## The procedure
+This repository is an example of how you can create a full CI/CD cloud architecture with only 1 click.
 
 ![Complete infra deployment](./images/toolchainInfraDeploy.png)
-### 1. Toolchain creation
-In order to automatically create a toolchain
+
+## 1. Toolchain creation
+You can create this entire architecture with only 1 click.
+The only thing you must do is fill the following URL with the specific params of your project:
 ```
 https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &region_name=<IBM-REGION>
@@ -36,3 +29,15 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 - **IBM-GIT-PROVIDER**: Git access object -> ```github_integrated``` for **GitHub**, ```hostedgit``` for **GitLab**.
 - **IBM-GIT-PROVIDER-TYPE**: Type of repo -> ```link``` for **Existing**.
 - **CUSTOMER-NAME**: Prefix name for every new cloud objects.
+
+
+This URL will access the repo to read the file ./.bluemix/toolchain.yml.
+In this case it is configured to create a toolchain with two elements:
+1. Access to **GitHub repo** and detect new commits.
+2. **Pipeline**, trigered by a commit in the repo, which is composed by three stages:
+   1. Create/Update an **Schematics** workspace.
+   2. Create an execution **Plan** for that schematics workspace.
+   3. **Apply** the execution plan of the schematics workspace.
+
+When the execution plan is applied by the pipeline, it creates all the clould objects specified inside ```terraform```folder.
+
