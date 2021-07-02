@@ -1,6 +1,13 @@
 # IaC Toolchain CI/CD Deployment
 Initial deployment of the toolchain
 
+With this repository you will create a toolchain with two elements:
+1. Access to **GitHub repo** and detect new commits.
+2. **Pipeline** trigered by commit in repo, which is composed by three stages:
+   1. Create/Update an **Schematics** workspace.
+   2. Create an execution **Plan** for that schematics workspace.
+   3. **Apply** the execution plan of the schematics workspace.
+
 ```
 https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &region_name=<IBM-REGION>
