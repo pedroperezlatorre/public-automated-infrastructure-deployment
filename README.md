@@ -1,15 +1,24 @@
-# IaC Toolchain CI/CD Deployment
+# Automated Infrastucture Deployment, 
+## An IaC Toolchain CI/CD Deployment
 
 This repository is an example of how you can create a full CI/CD cloud architecture with only 1 click.
 
 ![Complete infra deployment](./images/toolchainInfraDeploy.png)
 
-## 0. Repository structure
+
+## 0. Pre-requisites
+In order to use this tool, it is needed:
+- IBM Cloud account admin permissions
+- IBM Cloud account API key
+- Git Hub Personal Access Token
+
+## 1. Repository structure
 The repo must contain at least the following three folders:
 1. [.bluemix](./.bluemix): Toolchain configuration files.
 2. [schematics](./schematics): Schematics config file & initial values of terraform variables.
 3. [terraform](./terraform): Cloud objects to be created.
-## 1. Toolchain creation
+
+## 2. Toolchain creation
 You can create this entire architecture with only 1 click.
 The only thing you must do is fill the following **URL** with the specific params of your project:
 ```
@@ -43,7 +52,7 @@ In this particular case it is configured to create a toolchain with two elements
 1. Access to **GitHub repo** and detect new commits.
 2. **Pipeline**, trigered by a commit in the repo.
 
-## 2. Pipeline
+## 3. Pipeline
 
 The pipeline is where the actions over the cloud will be performed. It is trigered by a commit in the repo, and it perform three chained actions sequentially:
    1. Create/Update an **Schematics** workspace: Applies changes found in [./schematics/initial.json](./schematics/initial.json)
