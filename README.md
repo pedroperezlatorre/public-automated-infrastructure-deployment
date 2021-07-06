@@ -73,7 +73,7 @@ To do that, you have to perform the following steps:
 1. Declare the schematics variable inside [terraform variables.tf file](./terraform/variables.tf) and use it in any other [terraform file](./terraform) to create cloud objects.
 2. Insert variable and value inside the Toolchain creation URL with the format ```&newvar=newValue``` :
    ```https://cloud.ibm.com/devops/...&customer=myCustomer```
-3. Inside [Toolchain file](./.bluemix/toolchain.yml) pass the variable as a env-var to the pipeline service:
+3. Inside [Toolchain file](./.bluemix/toolchain.yml) pass the variable as a env-var to the **pipeline** service:
 ![toolchain creation web](./images/toolchainVariable.png)
 4. Inside [Pipeline file](./.bluemix/pipeline.yml):
    1. Declare input variable in ```properties```section.
