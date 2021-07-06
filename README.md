@@ -74,6 +74,7 @@ To do that, you have to perform the following steps:
 2. Insert variable and value inside the Toolchain creation URL with the format ```&newvar=newValue``` :
    ```https://cloud.ibm.com/devops/...&customer=myCustomer```
 3. Inside [Toolchain file](./.bluemix/toolchain.yml) pass the variable as a env-var to the pipeline service:
+![toolchain creation web](./images/toolchainVariable.png)
 4. Inside [Pipeline file](./.bluemix/pipeline.yml):
    1. Declare input variable in ```properties```section.
    2. Define ***placeholder string*** inside [Schematics file](./schematics/initial.json) to be substituted.
