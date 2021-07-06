@@ -82,5 +82,5 @@ To do that, you have to perform the following steps:
    2. Define ***placeholder string*** inside [Schematics file](./schematics/initial.json) to be substituted.
 
       ![Schematics placeholder](./images/placeholderSchematics.png)
-   3. Use the variable inside any **script** stage to substitute every occurence of a ***placeholder string*** in the [Schematics file](./schematics/initial.json):
+   3. Use the variable inside any [**script** pipeline stage](./.bluemix/pipeline.yml) to substitute every occurence of a ***placeholder string*** in the [Schematics file](./schematics/initial.json):
    ```sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json```
