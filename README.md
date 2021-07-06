@@ -66,10 +66,11 @@ When the execution plan is applied by **Schematics**, it creates all the clould 
 
 ## BONUS TRACK: How to inject variables from URL params to Terraform templates 
 
-As everything is automated and human intervention is almost non-existent, a very common question is **How to enter a value to be applied to some terraform objects?*
+As everything is automated, and human intervention is almost non-existent, a very common question is **How to enter a value to be applied to some terraform objects?*
 
-To do that you have to perform the following steps:
-1. Insert variable and value inside the Toolchain creation URL:
+To do that, you have to perform the following steps:
+1. Insert variable and value inside the Toolchain creation URL with the format ```&newvar=newValue``` :
+   ```https://cloud.ibm.com/devops/...&customer=myCustomer```
 2. Inside [Toolchain file](./.bluemix/toolchain.yml) pass the variable as a env-var to the pipeline service:
 3. Inside [Pipeline file](./.bluemix/pipeline.yml):
    1. Declare input variable in ```properties```section.
