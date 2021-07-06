@@ -10,7 +10,8 @@ This repository is an example of how you can create a full CI/CD cloud architect
 In order to use this tool, it is needed:
 - IBM Cloud account admin permissions
 - IBM Cloud account API key
-- Git Hub Personal Access Token
+- GitHub repository
+- GitHub Personal Access Token
 
 ## 1. Repository structure
 The repo must contain at least the following three folders:
@@ -65,7 +66,6 @@ When the execution plan is applied by **Schematics**, it creates all the clould 
 
 ## BONUS TRACK: How to inject variables from URL params to Terraform templates 
 
-*PENDING TO BE DONE*
 As everything is automated and human intervention is almost non-existent, a very common question is **How to enter a value to be applied to some terraform objects?*
 
 To do that you have to perform the following steps:
