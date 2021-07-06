@@ -69,12 +69,13 @@ When the execution plan is applied by **Schematics**, it creates all the clould 
 As everything is automated, and human intervention is almost non-existent, a very common question is **How to enter a value to be applied to some terraform objects?*
 
 To do that, you have to perform the following steps:
-1. Insert variable and value inside the Toolchain creation URL with the format ```&newvar=newValue``` :
+
+1. Declare the schematics variable inside [terraform variables.tf file](./terraform/variables.tf) and use it in any other [terraform file](./terraform/variables.tf) to create cloud objects.
+2. Insert variable and value inside the Toolchain creation URL with the format ```&newvar=newValue``` :
    ```https://cloud.ibm.com/devops/...&customer=myCustomer```
-2. Inside [Toolchain file](./.bluemix/toolchain.yml) pass the variable as a env-var to the pipeline service:
-3. Inside [Pipeline file](./.bluemix/pipeline.yml):
+3. Inside [Toolchain file](./.bluemix/toolchain.yml) pass the variable as a env-var to the pipeline service:
+4. Inside [Pipeline file](./.bluemix/pipeline.yml):
    1. Declare input variable in ```properties```section.
    2. Define ***placeholder string*** inside [Schematics file](./schematics/initial.json) to be substituted.
    3. Use the variable inside any **script** stage to substitute every occurence of a ***placeholder string*** in the [Schematics file](./schematics/initial.json):
    ```sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json```
-   4. Declare and use the schematics variable inside terraform [variables.tf](./terraform/variables.tf) and any other terraform file.
