@@ -77,8 +77,10 @@ To do that, you have to perform the following steps:
 ![toolchain creation web](./images/toolchainVariable.png)
 4. Inside [Pipeline file](./.bluemix/pipeline.yml):
    1. Declare input variable in ```properties```section.
-   
+
       ![pipeline input var](./images/pipelineInputVar.png)
    2. Define ***placeholder string*** inside [Schematics file](./schematics/initial.json) to be substituted.
+
+      ![Schematics placeholder](./images/placeholderSchematics.png)
    3. Use the variable inside any **script** stage to substitute every occurence of a ***placeholder string*** in the [Schematics file](./schematics/initial.json):
    ```sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json```
