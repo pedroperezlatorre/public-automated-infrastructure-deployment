@@ -1,0 +1,56 @@
+version: "2"
+template:
+  name: "Schematics IaC Toolchain"
+  description: "Prototype toolchain templates for IBM Cloud Schematics "
+  required:
+    - terraform-apply
+    - terraform-repo
+  info:
+    # compute the git url and branch values dynamically so that they remain correct when repo is forked etc.
+    # note: `repository` url param must always be provided while the `branch` url param is optional
+    # the computed urls are of the same format as the original static urls shown above
+    git url: >
+      [{{repository}}]({{repository}})
+    git branch: >
+      [{{branch}}]({{repository}}/tree/{{branch}})
+toolchain:
+  name: '{{toolchain_name}}'
+services:
+  terraform-repo:
+    service_id: github_integrated
+    parameters:
+      repo_name: '{{toolchain.name}}'
+      type: '{{type}}'
+      has_issues: true
+      enable_traceability: true
+      legal: true # 'I Understand' checkbox
+      repo_url: '{{repository}}'
+  terraform-apply:
+    service_id: pipeline
+    parameters:
+      services:
+        - terraform-repo
+      name: "Schematics Pipeline"
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          GIT_REPO: terraform-repo
+          GIT_REPO_URL: '{{repository}}'
+          GIT_REPO_BRANCH: '{{branch}}'
+          API_KEY: "{{form.pipeline.parameters.api-key}}"
+          REGION_NAME: "{{region_name}}"
+          REPOSITORY_ACCESS_TOKEN: "{{repository_token}}"
+          REGION_ID: "{{env_id}}"
+          CR_PLAN: $env.cr_plan || 'free'
+          CUSTOMER: '{{customer}}'
+        execute: true
+  webide:
+    service_id: orion
+form:
+  pipeline:
+    parameters:
+      api-key: "{{apiKey}}"
+    schema:
+      $ref: deploy.json

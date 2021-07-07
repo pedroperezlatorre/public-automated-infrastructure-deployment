@@ -1,0 +1,111 @@
+{
+    "name": "customer_placeholder-Infra",
+    "location": "region_placeholder",
+    "type": ["terraform_v0.14"],
+    "description": "Resource groups and continuous delivery",
+    "tags": [],
+    "template_repo": {
+      "url": "template_repo_placeholder/tree/template_repo_branch_placeholder/terraform"
+    },
+    "githubtoken": "$REPOSITORY_ACCESS_TOKEN",
+    "template_data": [
+      {
+        "folder": ".",
+        "type": "terraform_v0.14",
+        "variablestore": [
+          {
+            "name": "resource_groups_count",
+            "value": "2",
+            "type": "string"
+          },
+          {
+            "name": "resource_groups_name",
+            "value": "customer_placeholder",
+            "type": "string"
+          },
+          {
+            "name": "resource_group_cd_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "default_cd_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "ibmcloud_api_key",
+            "value": "apikey_placeholder",
+            "type": "string",
+            "secure": true
+          },
+          {
+            "name": "unique_id",
+            "value": "customer_placeholder",
+            "type": "string"
+          },
+          {
+          "name": "cos_plan",
+          "value": "standard",
+          "type": "string"
+          },
+          {
+          "name": "ibm_region",
+          "value": "region_placeholder",
+          "type": "string"
+          },
+          {
+          "name": "db2_plan",
+          "value": "standard",
+          "type": "string"
+          },
+          {
+          "name": "db2_key_role",
+          "value": "Manager",
+          "type": "string"
+          },
+          {
+          "name": "cloudant_plan",
+          "value": "standard",
+          "type": "string"
+          },
+          {
+          "name": "cloudant_key_role",
+          "value": "Manager",
+          "type": "string"
+          },
+          {
+          "name": "w_studio_plan",
+          "value": "free-v1",
+          "type": "string"
+          },
+          {
+          "name": "wml_plan",
+          "value": "lite",
+          "type": "string"
+          },
+          {
+            "name": "cidr_blocks",
+            "value": "[\"10.10.10.0/24\", \"10.10.11.0/24\", \"10.10.12.0/24\"]",
+            "type": "list"
+          },
+          {
+          "name": "machine_type",
+          "value": "bx2.4x16",
+          "type": "string"
+          },
+          {
+          "name": "worker_count",
+          "value": "1",
+          "type": "number"
+          },
+          {
+          "name": "kube_version",
+          "value": "4.6.34_openshift",
+          "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+  

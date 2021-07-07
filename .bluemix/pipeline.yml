@@ -1,0 +1,259 @@
+---
+defaultBaseImageVersion: latest
+properties:
+  - name: API_KEY
+    value: ${API_KEY}
+    type: secure
+  - name: REGION_NAME
+    value: ${REGION_NAME}
+    type: text
+  - name: GIT_REPO_URL
+    value: ${GIT_REPO_URL}
+    type: text
+  - name: GIT_REPO_BRANCH
+    value: ${GIT_REPO_BRANCH}
+    type: text
+  - name: CUSTOMER
+    value: ${CUSTOMER}
+    type: text
+stages:
+  - name: CREATE/UPDATE SCHEMATICS WS
+    inputs:
+      - type: git
+        service: ${GIT_REPO}
+        branch: ${GIT_REPO_BRANCH}
+    triggers:
+      - type: commit
+    properties:
+      - name: REPOSITORY_ACCESS_TOKEN
+        value: ${REPOSITORY_ACCESS_TOKEN}
+        type: secure
+    jobs:
+      - name: "Create/Update Schematics Workspace"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+          set -x
+
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
+
+          sed -i "s/apikey_placeholder/$API_KEY/g" ./schematics/initial.json
+
+          # Set the terraform repo URL
+          ESCAPED_GIT_REPO=$(printf '%s\n' "$GIT_REPO_URL" | sed -e 's/[\/&]/\\&/g')
+          sed -i "s/template_repo_placeholder/$ESCAPED_GIT_REPO/g" ./schematics/initial.json
+
+          # Set the terraform repo branch
+          sed -i "s/template_repo_branch_placeholder/$GIT_REPO_BRANCH/g" ./schematics/initial.json
+
+          # Set the terraform Region
+          sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json
+
+          # Set the Customer name
+          sed -i "s/customer_placeholder/$CUSTOMER/g" ./schematics/initial.json
+
+          WORKSPACE_NAME=$(cat ./schematics/initial.json | jq ".name")
+          WORKSPACE_ID=$(ibmcloud schematics workspace list --json | jq ".workspaces | select (. != null) | .[] | select ( .name == $WORKSPACE_NAME ) .id" | sed -e 's/^"//' -e 's/"$//')
+
+          if [ ! -z "$WORKSPACE_ID" ]
+          then
+            WORKSPACE=$(ibmcloud schematics workspace update --id $WORKSPACE_ID --file ./schematics/initial.json  --json --github-token $REPOSITORY_ACCESS_TOKEN)
+
+          else
+            WORKSPACE=$(ibmcloud schematics workspace new --file ./schematics/initial.json --json --github-token $REPOSITORY_ACCESS_TOKEN)
+            WORKSPACE_ID=$(echo $WORKSPACE | jq ".id" | sed -e 's/^"//' -e 's/"$//')
+          fi
+
+          RESOURCE_GROUPS_NAMES=$(echo $WORKSPACE | jq ".template_data[0].variablestore[] | select ( .name == \"infrastructure_resource_groups_names\" ) .value" | sed -e 's/^"\[//' -e 's/\]"$//' | sed -e 's/\\\"//g' )
+          PIPELINES_RESOURCE_GROUP_NAME=$(echo $WORKSPACE | jq ".template_data[0].variablestore[] | select ( .name == \"pipelines_resource_group_name\" ) .value"  | sed 's/ *$//g' | sed 's/"//g')
+
+          mkdir -p $ARCHIVE_DIR
+          cp -R -n ./ $ARCHIVE_DIR/ || true
+          echo "WORKSPACE_ID=${WORKSPACE_ID}" >> $ARCHIVE_DIR/build.properties
+          echo "RESOURCE_GROUPS_NAMES=${RESOURCE_GROUPS_NAMES}" >> $ARCHIVE_DIR/build.properties
+          echo "PIPELINES_RESOURCE_GROUP_NAME=${PIPELINES_RESOURCE_GROUP_NAME}" >> $ARCHIVE_DIR/build.properties
+
+          unset WORKSPACE
+  - name: PLAN
+    inputs:
+      - type: job
+        stage: CREATE/UPDATE SCHEMATICS WS
+        job: "Create/Update Schematics Workspace"
+    triggers:
+      - type: stage
+    properties:
+      - name: properties
+        value: build.properties
+        type: file
+    jobs:
+      - name: "Terraform Plan"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+          set -x
+
+          waitForCompletion () {
+            ACTIVITY_ID=$1
+            WORKSPACE_ID=$2
+
+            # poll until status is no longer INPROGRESS, or if there is an error
+            while :
+            do
+              STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
+            
+              RET_VAL=$?
+              if [ $RET_VAL -ne 0 ]; then
+
+                echo $STATUS
+                exit $RET_VAL
+              else
+
+                # get rid of trailing "OK" if found
+                if [[ $STATUS == *OK ]]; then
+                  STATUS=${STATUS%??}
+                fi
+                STATUS_VALUE=$(echo $STATUS | jq -r ".status")
+                echo "Polling for status: $STATUS_VALUE"
+
+                if [ "$STATUS_VALUE" = "FAILED" ]; then 
+                  ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+                  exit 1
+                elif [ "$STATUS_VALUE" != "INPROGRESS" ] && [ "$STATUS_VALUE" != "CREATED" ]; then  
+                  break
+                fi
+              fi
+
+              # sleep for 5 seconds, while waiting for completion
+              sleep 5
+            done
+
+            return 0
+          }
+
+          # MAIN PROCEDURE #
+          ##################
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
+
+          # Refresh Cloud status to schematics
+          ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
+          # get rid of trailing "OK" if found
+          if [[ $ACTIVITY == *OK ]]; then
+            ACTIVITY=${ACTIVITY%??}
+          fi
+          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          echo "Activity ID   $ACTIVITY_ID"
+          
+          waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
+          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+
+
+          # Run schematics plan
+          ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)
+          # get rid of trailing "OK" if found
+          if [[ $ACTIVITY == *OK ]]; then
+            ACTIVITY=${ACTIVITY%??}
+          fi
+          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          echo "Activity ID   $ACTIVITY_ID"
+          
+          waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
+          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+  - name: APPLY
+    inputs:
+      - type: job
+        stage: PLAN
+        job: "Terraform Plan"
+    triggers:
+      - type: stage
+    properties:
+      - name: properties
+        value: build.properties
+        type: file
+      - name: CR_PLAN
+        value: ${CR_PLAN}
+        type: text
+    jobs:
+      - name: "Terraform Apply"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
+
+          set -x
+
+          waitForCompletion () {
+            ACTIVITY_ID=$1
+            WORKSPACE_ID=$2
+
+            # poll until status is no longer INPROGRESS, or if there is an error
+            while :
+            do
+              STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
+            
+              RET_VAL=$?
+              if [ $RET_VAL -ne 0 ]; then
+
+                echo $STATUS
+                exit $RET_VAL
+              else
+
+                # get rid of trailing "OK" if found
+                if [[ $STATUS == *OK ]]; then
+                  STATUS=${STATUS%??}
+                fi
+                STATUS_VALUE=$(echo $STATUS | jq -r ".status")
+                echo "Polling for status: $STATUS_VALUE"
+
+                if [ "$STATUS_VALUE" = "FAILED" ]; then 
+                  ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+                  exit 1
+                elif [ "$STATUS_VALUE" != "INPROGRESS" ] && [ "$STATUS_VALUE" != "CREATED" ]; then  
+                  break
+                fi
+              fi
+
+              # sleep for 5 seconds, while waiting for completion
+              sleep 5
+            done
+
+            return 0
+          }
+
+          # MAIN PROCEDURE #
+          ##################
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
+
+          # # Refresh Cloud status to schematics
+          # ACTIVITY=$(ibmcloud schematics refresh --id $WORKSPACE_ID --json)
+          # # get rid of trailing "OK" if found
+          # if [[ $ACTIVITY == *OK ]]; then
+          #   ACTIVITY=${ACTIVITY%??}
+          # fi
+          # ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          # echo "Activity ID   $ACTIVITY_ID"
+          
+          # waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
+          # ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+
+
+          # Run schematics plan
+          ACTIVITY=$(ibmcloud schematics apply --id $WORKSPACE_ID --json --force)
+          # get rid of trailing "OK" if found
+          if [[ $ACTIVITY == *OK ]]; then
+            ACTIVITY=${ACTIVITY%??}
+          fi
+          ACTIVITY_ID=$(echo $ACTIVITY | jq -r ".activityid")
+          echo "Activity ID   $ACTIVITY_ID"
+          
+          waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
+          ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
