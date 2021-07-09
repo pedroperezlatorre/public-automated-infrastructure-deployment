@@ -78,6 +78,7 @@ stages:
           echo "PIPELINES_RESOURCE_GROUP_NAME=${PIPELINES_RESOURCE_GROUP_NAME}" >> $ARCHIVE_DIR/build.properties
 
           unset WORKSPACE
+          sleep 15
   - name: PLAN
     inputs:
       - type: job
