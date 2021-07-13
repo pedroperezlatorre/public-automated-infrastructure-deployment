@@ -161,3 +161,12 @@ variable language_translator_plan {
   default     = "lite"
 }
 ##############################################################################
+
+##############################################################################
+# Natural Language Understanding Variables
+##############################################################################
+variable natural_language_understanding_plan {
+  description = "Natural Language Understanding plan"
+  default     = "free"
+}
+##############################################################################
