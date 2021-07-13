@@ -170,3 +170,13 @@ variable natural_language_understanding_plan {
   default     = "free"
 }
 ##############################################################################
+
+
+##############################################################################
+# Natural Language Classifier Variables
+##############################################################################
+variable natural_language_classifier_plan {
+  description = "Natural Language Classifier plan"
+  default     = "standard"
+}
+##############################################################################
