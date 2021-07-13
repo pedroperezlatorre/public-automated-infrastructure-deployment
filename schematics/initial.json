@@ -103,7 +103,12 @@
             "name": "language_translator_plan",
             "value": "lite",
             "type": "string"
-            },
+          },
+          {
+            "name": "natural_language_understanding_plan",
+            "value": "free",
+            "type": "string"
+          },
           {
             "name": "cidr_blocks",
             "value": "[\"10.10.10.0/24\", \"10.10.11.0/24\", \"10.10.12.0/24\"]",
