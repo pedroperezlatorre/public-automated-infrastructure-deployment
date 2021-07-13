@@ -80,6 +80,11 @@
           "type": "string"
           },
           {
+            "name": "w_assistant_plan",
+            "value": "free",
+            "type": "string"
+            },
+          {
           "name": "wml_plan",
           "value": "lite",
           "type": "string"
