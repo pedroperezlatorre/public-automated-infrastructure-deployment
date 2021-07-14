@@ -17,3 +17,17 @@ resource "ibm_resource_key" "cloudant_key" {
   role                 = var.cloudant_key_role
   resource_instance_id = ibm_resource_instance.cloudant_instance.id
 }
+
+# Pass Cloudant credentials to K8S
+resource "kubernetes_secret" "example" {
+  metadata {
+    name = "basic-auth"
+  }
+
+  data = {
+    username = "admin"
+    password = "P4ssw0rd"
+  }
+
+  type = "kubernetes.io/basic-auth"
+}
