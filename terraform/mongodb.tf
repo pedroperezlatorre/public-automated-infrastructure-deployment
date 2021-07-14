@@ -25,7 +25,7 @@ resource "kubernetes_secret" "example" {
   }
 
   data = {
-    username = "admin"
+    username = ibm_resource_key.cloudant_key.credentials.username
     password = "P4ssw0rd"
   }
 
