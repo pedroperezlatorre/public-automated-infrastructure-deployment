@@ -19,14 +19,18 @@ resource "ibm_resource_key" "cloudant_key" {
 }
 
 # Pass Cloudant credentials to K8S
-resource "kubernetes_secret" "example" {
+resource "kubernetes_secret" "cloudant_credentials" {
   metadata {
     name = "basic-auth"
   }
 
   data = {
-    username = ibm_resource_key.cloudant_key.credentials.username
-    password = "P4ssw0rd"
+    host      = ibm_resource_key.cloudant_key.credentials.host
+    port      = ibm_resource_key.cloudant_key.credentials.port
+    url      = ibm_resource_key.cloudant_key.credentials.url
+    username  = ibm_resource_key.cloudant_key.credentials.username
+    password  = ibm_resource_key.cloudant_key.credentials.password
+
   }
 
   type = "kubernetes.io/basic-auth"
