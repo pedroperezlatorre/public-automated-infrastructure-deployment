@@ -115,6 +115,31 @@
             "type": "string"
           },
           {
+            "name": "speechtotext_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "texttospeech_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "toneanalyzer_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "w_discovery_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "openscale_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
             "name": "cidr_blocks",
             "value": "[\"10.10.10.0/24\", \"10.10.11.0/24\", \"10.10.12.0/24\"]",
             "type": "list"
