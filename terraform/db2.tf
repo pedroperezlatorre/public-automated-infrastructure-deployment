@@ -25,12 +25,12 @@ resource "kubernetes_secret" "db2_credentials" {
   }
 
   data = {
-    host      = ibm_resource_key.db2_key.credentials.connection.db2.hosts.0.hostname
-    port      = ibm_resource_key.db2_key.credentials.connection.db2.hosts.0.port
-    dbname    = ibm_resource_key.db2_key.credentials.connection.db2.database
-    username  = ibm_resource_key.cloudant_key.credentials.connection.db2.authentication.username
-    password  = ibm_resource_key.cloudant_key.credentials.connection.db2.authentication.password
-    method    = ibm_resource_key.cloudant_key.credentials.connection.db2.authentication.method
+    host      = ibm_resource_key.db2_key.credentials["connection.db2.hosts.0.hostname"]
+    port      = ibm_resource_key.db2_key.credentials["connection.db2.hosts.0.port"]
+    dbname    = ibm_resource_key.db2_key.credentials["connection.db2.database"]
+    username  = ibm_resource_key.db2_key.credentials["connection.db2.authentication.username"]
+    password  = ibm_resource_key.db2_key.credentials["connection.db2.authentication.password"]
+    method    = ibm_resource_key.db2_key.credentials["connection.db2.authentication.method"]
   }
 
   type = "kubernetes.io/basic-auth"
