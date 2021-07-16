@@ -80,9 +80,64 @@
           "type": "string"
           },
           {
+            "name": "w_assistant_plan",
+            "value": "free",
+            "type": "string"
+          },
+          {
+            "name": "w_knowledgecatalog_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "w_knowledgestudio_plan",
+            "value": "free",
+            "type": "string"
+          },
+          {
           "name": "wml_plan",
           "value": "lite",
           "type": "string"
+          },
+          {
+            "name": "language_translator_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "natural_language_understanding_plan",
+            "value": "free",
+            "type": "string"
+          },
+          {
+            "name": "natural_language_classifier_plan",
+            "value": "standard",
+            "type": "string"
+          },
+          {
+            "name": "speechtotext_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "texttospeech_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "toneanalyzer_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "w_discovery_plan",
+            "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "openscale_plan",
+            "value": "lite",
+            "type": "string"
           },
           {
             "name": "cidr_blocks",

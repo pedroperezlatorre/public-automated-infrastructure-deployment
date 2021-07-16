@@ -48,8 +48,8 @@ stages:
           sed -i "s/template_repo_placeholder/$ESCAPED_GIT_REPO/g" ./schematics/initial.json
 
           # Set the terraform repo branch
-          sed -i "s/template_repo_branch_placeholder/$GIT_REPO_BRANCH/g" ./schematics/initial.json
-
+          ESCAPED_REPO_BRANCH=$(printf '%s\n' "$GIT_REPO_BRANCH" | sed -e 's/[\/&]/\\&/g')
+          sed -i "s/template_repo_branch_placeholder/$ESCAPED_REPO_BRANCH/g" ./schematics/initial.json
           # Set the terraform Region
           sed -i "s/region_placeholder/$REGION_NAME/g" ./schematics/initial.json
 
