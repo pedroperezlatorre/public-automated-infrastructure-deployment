@@ -2,6 +2,7 @@ module "cos" {
   source    = "./cos"
   unique_id = var.unique_id
   cos_plan  = var.cos_plan
+  rg_id     = ibm_resource_group.resource_group.id
 }
 
 # module "cloudant" {
