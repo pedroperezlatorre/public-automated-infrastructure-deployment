@@ -10,11 +10,6 @@ resource ibm_resource_instance cos {
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = ["iks-on-vpc"]
 
-  #parameters = {
-  #  service-endpoints = "${var.end_points}"
-  #  key_protect_key   = "${data.ibm_schematics_output.key_workspace.output_values.kms_key_id}"
-  #}
-
   //User can increase timeouts 
   timeouts {
     create = "15m"

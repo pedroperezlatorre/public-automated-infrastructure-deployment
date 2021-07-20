@@ -1,3 +1,9 @@
+module "cos" {
+  source            = "./cos"
+  unique_id         = var.unique_id
+  cloudant_plan     = var.cos_plan
+}
+
 # module "cloudant" {
 #   source            = "./cloudant"
 #   unique_id         = var.unique_id
