@@ -1,7 +1,7 @@
 module "cos" {
-  source            = "./cos"
-  unique_id         = var.unique_id
-  cloudant_plan     = var.cos_plan
+  source    = "./cos"
+  unique_id = var.unique_id
+  cos_plan  = var.cos_plan
 }
 
 # module "cloudant" {
