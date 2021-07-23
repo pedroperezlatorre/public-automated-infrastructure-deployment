@@ -124,6 +124,11 @@ variable "kube_version" {
   description = "Version of the IKS Cluster"
   default     = "1.20.8"
 }
+
+variable "k8s_present" {
+  description = "Indicates if K8S cluster has been deployed"
+  default     = null
+}
 ##############################################################################
 
 ##############################################################################

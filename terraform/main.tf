@@ -12,7 +12,7 @@ module "cloudant" {
   ibm_region        = var.ibm_region
   cloudant_key_role = var.cloudant_key_role
   rg_id             = ibm_resource_group.resource_group.id
-  k8s_present       = ibm_container_vpc_cluster.cluster.id != "" ? true : false
+  k8s_present       = var.k8s_present != null ? true : false
 }
 
 # module "db2" {
