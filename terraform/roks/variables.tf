@@ -1,6 +1,5 @@
 variable "unique_id" {}
 variable "rg_id" {}
-variable "cos_id" {}
 
 ##############################################################################
 # Cluster Variables
