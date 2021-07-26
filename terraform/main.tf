@@ -2,7 +2,7 @@ module "roks" {
   source        = "./roks"
   unique_id     = var.unique_id
   rg_id         = ibm_resource_group.resource_group.id
-  cos_plan      = var.cos_plan
+  cos_plan      = "standard"
   machine_type  = "bx2.4x16"
   worker_count  = "1"
   kube_version  = "4.6.34_openshift"
