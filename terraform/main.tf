@@ -10,6 +10,22 @@ module "roks" {
   cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
 }
 
+# Access to K8S cluster
+###############################################################################################
+data "ibm_container_cluster_config" "cluster" {
+  cluster_name_id = module.roks.cluster_id
+  admin           = true
+}
+
+provider "kubernetes" {
+  host                   = data.ibm_container_cluster_config.cluster.host
+  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
+  client_key             = data.ibm_container_cluster_config.cluster.admin_key
+  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
+}
+###############################################################################################
+
+
 # module "cos" {
 #   source    = "./cos"
 #   unique_id = var.unique_id

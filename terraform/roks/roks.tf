@@ -48,22 +48,6 @@ resource "ibm_container_vpc_cluster" "cluster" {
 #   }
 }
 
-###############################################################################################
-# Access to K8S cluster
-###############################################################################################
-data "ibm_container_cluster_config" "cluster" {
-  cluster_name_id = ibm_container_vpc_cluster.cluster.id
-  admin           = true
-}
-
-provider "kubernetes" {
-  host                   = data.ibm_container_cluster_config.cluster.host
-  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
-  client_key             = data.ibm_container_cluster_config.cluster.admin_key
-  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
-}
-###############################################################################################
-
 resource "kubernetes_namespace" "example" {
   metadata {
     name = "terraform-example-namespace"
