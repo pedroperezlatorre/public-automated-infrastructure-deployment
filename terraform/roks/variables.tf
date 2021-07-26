@@ -1,5 +1,6 @@
 variable "unique_id" {}
 variable "rg_id" {}
+variable "ibm_region" {}
 
 ##############################################################################
 # COS Variables

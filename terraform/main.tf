@@ -2,6 +2,7 @@ module "roks" {
   source        = "./roks"
   unique_id     = var.unique_id
   rg_id         = ibm_resource_group.resource_group.id
+  ibm_region    = var.ibm_region
   cos_plan      = "standard"
   machine_type  = "bx2.4x16"
   worker_count  = "1"
