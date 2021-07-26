@@ -3,7 +3,7 @@ resource "ibm_resource_instance" "cloudant_instance" {
   service           = "cloudantnosqldb"
   plan              = var.cloudant_plan
   location          = var.ibm_region
-  resource_group_id = var.rg_id
+  resource_group_id = ibm_resource_group.resource_group.id
   
   timeouts {
     create = "15m"
