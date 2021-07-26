@@ -7,7 +7,7 @@ module "roks" {
   machine_type  = "bx2.4x16"
   worker_count  = "1"
   kube_version  = "4.6.34_openshift"
-  cidr_blocks   = "[\"10.10.10.0/24\", \"10.10.11.0/24\", \"10.10.12.0/24\"]"
+  cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
 }
 
 # module "cos" {
