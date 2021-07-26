@@ -24,8 +24,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
  vpc_id            = ibm_is_vpc.vpc.id
  flavor            = var.machine_type
  worker_count      = var.worker_count
- resource_group_id = ibm_resource_group.resource_group.id
- #kube_version      = "1.20.7"
+ resource_group_id = var.rg_id
  
  # OpenShift (OCP)
  kube_version      = var.kube_version

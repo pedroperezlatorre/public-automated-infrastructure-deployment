@@ -26,8 +26,8 @@
 resource ibm_is_vpc vpc {
   name           = "${var.unique_id}-vpc"
   #resource_group = "${data.ibm_schematics_output.groups_output.output_values.resource_group_id}"
-  resource_group = ibm_resource_group.resource_group.id
-  tags           = ["iks-on-vpc"]
+  resource_group = var.rg_id
+  tags           = ["roks-on-vpc"]
 }
 
 ##############################################################################

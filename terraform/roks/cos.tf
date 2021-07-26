@@ -3,12 +3,12 @@
 ##############################################################################
 
 resource ibm_resource_instance cos {
-  name              = "${var.unique_id}-cos"
+  name              = "${var.unique_id}-roks-cos"
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = "global"
   resource_group_id = var.rg_id
-  tags              = ["iks-on-vpc"]
+  tags              = ["roks-on-vpc"]
 
   //User can increase timeouts 
   timeouts {
