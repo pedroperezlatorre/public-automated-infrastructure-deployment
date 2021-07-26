@@ -1,5 +1,5 @@
 module "roks" {
-  sources       = "./roks"
+  source        = "./roks"
   unique_id     = var.unique_id
   rg_id         = ibm_resource_group.resource_group.id
   cos_plan      = var.cos_plan
