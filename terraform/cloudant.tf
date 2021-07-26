@@ -19,8 +19,8 @@ resource "ibm_resource_key" "cloudant_key" {
 }
 
 # Pass Cloudant credentials to K8S
+######################################################
 resource "kubernetes_secret" "cloudant_credentials" {
-  count = var.k8s_present ? 1 : 0
   metadata {
     name = "cloudant-credentials"
   }
@@ -36,3 +36,4 @@ resource "kubernetes_secret" "cloudant_credentials" {
 
   type = "kubernetes.io/basic-auth"
 }
+######################################################
