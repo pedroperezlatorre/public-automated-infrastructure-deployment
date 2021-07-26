@@ -48,8 +48,8 @@ resource "ibm_container_vpc_cluster" "cluster" {
 #   }
 }
 
-resource "kubernetes_namespace" "example" {
-  metadata {
-    name = "terraform-example-namespace"
-  }
-}
+# resource "kubernetes_namespace" "example" {
+#   metadata {
+#     name = "terraform-example-namespace"
+#   }
+# }
