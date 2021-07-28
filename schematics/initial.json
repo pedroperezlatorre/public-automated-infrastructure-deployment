@@ -1,5 +1,5 @@
 {
-    "name": "customer_placeholder-Infra",
+    "name": "customer_placeholder-IaC",
     "location": "region_placeholder",
     "type": ["terraform_v0.14"],
     "description": "Resource groups and continuous delivery",
