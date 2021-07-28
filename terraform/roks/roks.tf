@@ -20,7 +20,7 @@
 ##############################################################################
 
 resource "ibm_container_vpc_cluster" "cluster" {
- name              = "${var.unique_id}-iks"
+ name              = "${var.unique_id}-roks"
  vpc_id            = ibm_is_vpc.vpc.id
  flavor            = var.machine_type
  worker_count      = var.worker_count
