@@ -28,6 +28,16 @@ variable "kube_version" {
   description = "Version of the ROKS Cluster"
   default     = "4.6.34_openshift"
 }
+
+variable "pool1_type" {
+  description = "machine_type for Worker Pool 1"
+  default     = "bx2.4x16"
+}
+
+variable "pool1_size" {
+  description = "size_per_zone for Worker Pool 1"
+  default     = 0
+}
 ##############################################################################
 
 ##############################################################################

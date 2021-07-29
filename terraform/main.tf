@@ -8,6 +8,8 @@ module "roks" {
   worker_count  = "1"
   kube_version  = "4.6.38_openshift"
   cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
+  pool1_type    = "bx2.16x64"
+  pool1_size    = 1
 }
 
 # Access to K8S cluster
