@@ -5,7 +5,7 @@ resource "ibm_container_worker_pool" "workerpool" {
   size_per_zone    = var.pool1_size
   hardware         = "shared"
   disk_encryption  = "false"
-#   region           = var.ibm_region
+  region           = var.ibm_region
 
 #   labels = {
 #     "test" = "test-pool"
