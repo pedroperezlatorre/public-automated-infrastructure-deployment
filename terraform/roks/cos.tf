@@ -3,17 +3,12 @@
 ##############################################################################
 
 resource ibm_resource_instance cos {
-  name              = "${var.unique_id}-cos"
+  name              = "${var.unique_id}-roks-cos"
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = "global"
-  resource_group_id = ibm_resource_group.resource_group.id
-  tags              = ["iks-on-vpc"]
-
-  #parameters = {
-  #  service-endpoints = "${var.end_points}"
-  #  key_protect_key   = "${data.ibm_schematics_output.key_workspace.output_values.kms_key_id}"
-  #}
+  resource_group_id = var.rg_id
+  tags              = ["roks-on-vpc"]
 
   //User can increase timeouts 
   timeouts {

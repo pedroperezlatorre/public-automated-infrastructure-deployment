@@ -40,14 +40,6 @@ variable "default_cd_plan" {
   description = "continuous delivery plan of the default resource group"
   type        = string
 }
-##############################################################################
-# COS Variables
-##############################################################################
-variable cos_plan {
-  description = "ibm cloud object storage plan"
-  default     = "standard"
-}
-##############################################################################
 
 ##############################################################################
 # DB2 Variables
@@ -95,36 +87,7 @@ variable wml_plan {
 }
 ##############################################################################
 
-##############################################################################
-# Network variables
-##############################################################################
 
-variable cidr_blocks {
-    description = "List of CIDR blocks for subnets" 
-    default     = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"] 
-}
-
-##############################################################################
-
-##############################################################################
-# Cluster Variables
-##############################################################################
-
-variable "machine_type" {
-  description = "Machine type for the IKS Cluster"
-  default     = "bx2.2x8"
-}
-
-variable "worker_count" {
-  description = "Number of workers per zone"
-  default     = 1
-}
-
-variable "kube_version" {
-  description = "Version of the IKS Cluster"
-  default     = "1.20.8"
-}
-##############################################################################
 
 ##############################################################################
 # Watson Assistant Variables

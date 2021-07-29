@@ -19,6 +19,7 @@ resource "ibm_resource_key" "db2_key" {
 }
 
 # Pass Cloudant credentials to K8S
+######################################################
 resource "kubernetes_secret" "db2_credentials" {
   metadata {
     name = "db2-credentials"
@@ -35,3 +36,4 @@ resource "kubernetes_secret" "db2_credentials" {
 
   type = "kubernetes.io/basic-auth"
 }
+######################################################
