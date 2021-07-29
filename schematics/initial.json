@@ -133,26 +133,6 @@
             "name": "openscale_plan",
             "value": "lite",
             "type": "string"
-          },
-          {
-            "name": "cidr_blocks",
-            "value": "[\"10.10.10.0/24\", \"10.10.11.0/24\", \"10.10.12.0/24\"]",
-            "type": "list"
-          },
-          {
-          "name": "machine_type",
-          "value": "bx2.4x16",
-          "type": "string"
-          },
-          {
-          "name": "worker_count",
-          "value": "1",
-          "type": "number"
-          },
-          {
-          "name": "kube_version",
-          "value": "4.6.34_openshift",
-          "type": "string"
           }
         ]
       }
