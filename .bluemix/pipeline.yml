@@ -79,7 +79,7 @@ stages:
 
           unset WORKSPACE
           sleep 15
-  - name: PLAN
+  - name: REFRESH
     inputs:
       - type: job
         stage: CREATE/UPDATE SCHEMATICS WS
@@ -91,7 +91,7 @@ stages:
         value: build.properties
         type: file
     jobs:
-      - name: "Terraform Plan"
+      - name: "Terraform Refresh"
         type: builder
         artifact_dir: ""
         build_type: shell
@@ -154,7 +154,69 @@ stages:
           
           waitForCompletion $ACTIVITY_ID $WORKSPACE_ID
           ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+  - name: PLAN
+    inputs:
+      - type: job
+        stage: REFRESH
+        job: "Terraform Refresh"
+    triggers:
+      - type: stage
+    properties:
+      - name: properties
+        value: build.properties
+        type: file
+    jobs:
+      - name: "Terraform Plan"
+        type: builder
+        artifact_dir: ""
+        build_type: shell
+        script: |
+          #!/bin/bash
 
+          set -x
+
+          waitForCompletion () {
+            ACTIVITY_ID=$1
+            WORKSPACE_ID=$2
+
+            # poll until status is no longer INPROGRESS, or if there is an error
+            while :
+            do
+              STATUS=$(ibmcloud schematics workspace action --id $WORKSPACE_ID --act-id $ACTIVITY_ID --json)
+            
+              RET_VAL=$?
+              if [ $RET_VAL -ne 0 ]; then
+
+                echo $STATUS
+                exit $RET_VAL
+              else
+
+                # get rid of trailing "OK" if found
+                if [[ $STATUS == *OK ]]; then
+                  STATUS=${STATUS%??}
+                fi
+                STATUS_VALUE=$(echo $STATUS | jq -r ".status")
+                echo "Polling for status: $STATUS_VALUE"
+
+                if [ "$STATUS_VALUE" = "FAILED" ]; then 
+                  ibmcloud schematics logs --id $WORKSPACE_ID --act-id $ACTIVITY_ID
+                  exit 1
+                elif [ "$STATUS_VALUE" != "INPROGRESS" ] && [ "$STATUS_VALUE" != "CREATED" ]; then  
+                  break
+                fi
+              fi
+
+              # sleep for 5 seconds, while waiting for completion
+              sleep 5
+            done
+
+            return 0
+          }
+
+          # MAIN PROCEDURE #
+          ##################
+          # force login (required by schematics cli)
+          ibmcloud login --apikey $API_KEY -a "https://cloud.ibm.com" -r $REGION_NAME
 
           # Run schematics plan
           ACTIVITY=$(ibmcloud schematics plan --id $WORKSPACE_ID --json)

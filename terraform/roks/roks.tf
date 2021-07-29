@@ -20,12 +20,11 @@
 ##############################################################################
 
 resource "ibm_container_vpc_cluster" "cluster" {
- name              = "${var.unique_id}-iks"
+ name              = "${var.unique_id}-roks"
  vpc_id            = ibm_is_vpc.vpc.id
  flavor            = var.machine_type
  worker_count      = var.worker_count
- resource_group_id = ibm_resource_group.resource_group.id
- #kube_version      = "1.20.7"
+ resource_group_id = var.rg_id
  
  # OpenShift (OCP)
  kube_version      = var.kube_version
@@ -49,24 +48,8 @@ resource "ibm_container_vpc_cluster" "cluster" {
 #   }
 }
 
-###############################################################################################
-# Access to K8S cluster
-###############################################################################################
-data "ibm_container_cluster_config" "cluster" {
-  cluster_name_id = ibm_container_vpc_cluster.cluster.id
-  admin           = true
-}
-
-provider "kubernetes" {
-  host                   = data.ibm_container_cluster_config.cluster.host
-  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
-  client_key             = data.ibm_container_cluster_config.cluster.admin_key
-  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
-}
-###############################################################################################
-
-resource "kubernetes_namespace" "example" {
-  metadata {
-    name = "terraform-example-namespace"
-  }
-}
+# resource "kubernetes_namespace" "example" {
+#   metadata {
+#     name = "terraform-example-namespace"
+#   }
+# }
