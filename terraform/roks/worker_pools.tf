@@ -19,7 +19,7 @@
 
 resource "ibm_container_vpc_worker_pool" "workerpool" {
 
-  count = ${var.pool1_size > 0 ? 1 : 0}
+  count = var.pool1_size > 0 ? 1 : 0
 
   cluster          = ibm_container_vpc_cluster.cluster.name
   worker_pool_name = "worker-pool-1"
