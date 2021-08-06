@@ -1,3 +1,14 @@
+# Generic K8S Cluster credentials
+###############################################################################################
+provider "kubernetes" {
+  host                   = data.ibm_container_cluster_config.cluster.host
+  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
+  client_key             = data.ibm_container_cluster_config.cluster.admin_key
+  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
+}
+###############################################################################################
+
+
 # # ROKS-VPC Cluster
 # ###############################################################################################
 # module "roks" {
@@ -19,14 +30,8 @@
 #   cluster_name_id = module.roks.cluster_id
 #   admin           = true
 # }
-
-# provider "kubernetes" {
-#   host                   = data.ibm_container_cluster_config.cluster.host
-#   client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
-#   client_key             = data.ibm_container_cluster_config.cluster.admin_key
-#   cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
-# }
 # ###############################################################################################
+
 
 
 # IKS-VPC Cluster
@@ -48,12 +53,5 @@ module "iks_vpc" {
 data "ibm_container_cluster_config" "cluster" {
   cluster_name_id = module.iks_vpc.cluster_id
   admin           = true
-}
-
-provider "kubernetes" {
-  host                   = data.ibm_container_cluster_config.cluster.host
-  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
-  client_key             = data.ibm_container_cluster_config.cluster.admin_key
-  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
 }
 ###############################################################################################
