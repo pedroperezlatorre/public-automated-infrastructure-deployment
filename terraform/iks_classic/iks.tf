@@ -1,5 +1,22 @@
+###################################################################################################
+# Creates the IKS Cluster
+#
+# Requires:
+#   See provider.tf
+#       variables.tf
+#
+# Creates: 
+#   Creates an IKS cluster (ibm_container_vpc_cluster.cluster) and 
+#    
+# Outputs: 
+#  see outputs.tf
+#
+# References:
+#   IKS/VPC: https://cloud.ibm.com/docs/terraform?topic=terraform-container-resources&-access-data-sources#vpc-cluster
+##################################################################################################
+
 ##############################################################################
-# Provison IKS Classic Cluster
+# Provison IKS on VPC Cluster
 ##############################################################################
 
 resource "ibm_container_vpc_cluster" "cluster" {
@@ -27,20 +44,4 @@ resource "ibm_container_vpc_cluster" "cluster" {
     subnet_id = ibm_is_subnet.subnet.2.id
     name      = "${var.ibm_region}-3"
   }
-}
-
-resource "ibm_container_cluster" "cluster" {
-  name               = "${var.unique_id}-iks-classic"
-  datacenter         = var.cluster_datacenter
-  resource_group_id  = var.rg_id
-  machine_type       = var.machine_type
-  hardware           = var.cluster_hardware
-  kube_version       = var.kube_version
-  update_all_workers = true
-  gateway_enabled    = true
-
-  default_pool_size = var.default_pool_size
-
-  private_vlan_id = var.cluster_private_vlan
-  public_vlan_id  = var.cluster_public_vlan
 }
