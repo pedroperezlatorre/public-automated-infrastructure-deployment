@@ -62,7 +62,7 @@ provider "kubernetes" {
 # IKS-Classic Cluster
 ###############################################################################################
 module "iks_classic" {
-  source        = "./iks_vpc"
+  source        = "./iks_classic"
   unique_id     = var.unique_id
   rg_id         = ibm_resource_group.resource_group.id
   cluster_datacenter = "fra02"
