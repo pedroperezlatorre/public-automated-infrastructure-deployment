@@ -34,41 +34,15 @@ provider "kubernetes" {
 
 
 
-# IKS-VPC Cluster
-###############################################################################################
-module "iks_vpc" {
-  source        = "./iks_vpc"
-  unique_id     = var.unique_id
-  rg_id         = ibm_resource_group.resource_group.id
-  ibm_region    = var.ibm_region
-  machine_type  = "bx2.4x16"
-  worker_count  = "1"
-  kube_version  = "1.20.9"
-  cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
-  # Additional WorkerPool
-  pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
-  pool1_type    = "bx2.16x64"
-}
-
-data "ibm_container_cluster_config" "cluster" {
-  cluster_name_id = module.iks_vpc.cluster_id
-  admin           = true
-}
-###############################################################################################
-
-
-
-
-# # IKS-Classic Cluster
+# # IKS-VPC Cluster
 # ###############################################################################################
 # module "iks_vpc" {
 #   source        = "./iks_vpc"
 #   unique_id     = var.unique_id
 #   rg_id         = ibm_resource_group.resource_group.id
-#   cluster_datacenter = "fra02"
+#   ibm_region    = var.ibm_region
 #   machine_type  = "bx2.4x16"
-#   cluster_hardware  = "shared"
-#   default_pool_size  = "1"
+#   worker_count  = "1"
 #   kube_version  = "1.20.9"
 #   cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
 #   # Additional WorkerPool
@@ -81,3 +55,31 @@ data "ibm_container_cluster_config" "cluster" {
 #   admin           = true
 # }
 # ###############################################################################################
+
+
+
+
+# IKS-Classic Cluster
+###############################################################################################
+module "iks_classic" {
+  source        = "./iks_vpc"
+  unique_id     = var.unique_id
+  rg_id         = ibm_resource_group.resource_group.id
+  cluster_datacenter = "fra02"
+  machine_type  = "bx2.4x16"
+  cluster_hardware  = "shared"
+  default_pool_size  = "1"
+  kube_version  = "1.20.9"
+  cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
+  # Additional WorkerPool
+  pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
+  pool1_type    = "bx2.16x64"
+  cluster_private_vlan  = "3078462"
+  cluster_public_vlan   = "3078460"
+}
+
+data "ibm_container_cluster_config" "cluster" {
+  cluster_name_id = module.iks_classic.cluster_id
+  admin           = true
+}
+###############################################################################################
