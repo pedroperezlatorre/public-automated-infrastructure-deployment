@@ -1,6 +1,6 @@
 variable "unique_id" {}
 variable "rg_id" {}
-variable "ibm_region" {}
+# variable "ibm_region" {}
 
 ##############################################################################
 # Cluster Variables
