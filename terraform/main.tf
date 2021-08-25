@@ -74,8 +74,8 @@ module "iks_classic" {
   # Additional WorkerPool
   pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
   pool1_type    = "b3c.4x16"
-  cluster_private_vlan  = "3078462"
-  cluster_public_vlan   = "3078460"
+  cluster_private_vlan  = "3132960"
+  cluster_public_vlan   = "3132962"
 }
 
 data "ibm_container_cluster_config" "cluster" {
