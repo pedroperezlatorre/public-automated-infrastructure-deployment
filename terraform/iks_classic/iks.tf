@@ -37,7 +37,7 @@ resource "ibm_container_cluster" "cluster" {
   hardware           = var.cluster_hardware
   kube_version       = var.kube_version
   update_all_workers = true
-  gateway_enabled    = true
+  gateway_enabled    = false
   private_service_endpoint = true
 
   default_pool_size = var.default_pool_size
