@@ -69,7 +69,7 @@ module "iks_classic" {
   machine_type  = "b3c.4x16"
   cluster_hardware  = "shared"
   default_pool_size  = 1
-  kube_version  = "1.20.9"
+  kube_version  = "1.20.10"
   cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
   # Additional WorkerPool
   pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
