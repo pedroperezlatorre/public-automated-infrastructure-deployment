@@ -46,3 +46,35 @@ resource "ibm_container_cluster" "cluster" {
   public_vlan_id  = var.cluster_public_vlan
 }
 
+resource "ibm_container_cluster" "cluster" {
+  name                     = "${var.unique_id}-iks-classic"
+  resource_group_id        = var.rg_id
+
+  # Region
+  region                   = var.ibm_region
+  datacenter               = var.cluster_datacenter
+
+  # Resources
+  default_pool_size        = var.default_pool_size
+  worker_num               = "0"
+  disk_encryption          = "true"
+  hardware                 = var.cluster_hardware
+  machine_type             = var.machine_type
+
+  # VLAN
+  private_vlan_id          = var.cluster_private_vlan
+  public_vlan_id           = var.cluster_public_vlan
+  private_service_endpoint = "false"
+  public_service_endpoint  = "true"
+
+  # K8s items
+  kube_version             = var.kube_version
+  pod_subnet               = var.pod_subnet
+  service_subnet           = var.service_subnet
+  tags                     = ["test"]
+
+  # workers_info {
+  #   id      = "kube-c4jj6jtd043g7q56rt6g-ikstestusa-default-00000128"
+  #   version = "1.20.9"
+  # }
+}

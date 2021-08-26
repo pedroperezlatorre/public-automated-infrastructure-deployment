@@ -1,6 +1,6 @@
 variable "unique_id" {}
 variable "rg_id" {}
-# variable "ibm_region" {}
+variable "ibm_region" {}
 
 ##############################################################################
 # Cluster Variables
@@ -41,18 +41,6 @@ variable "pool1_size" {
   description = "size_per_zone for Worker Pool 1"
   default     = 0
 }
-
-variable "cluster_private_vlan" {
-  default     = "3078462"
-  description = "the private vlan id"
-  type        = string
-}
-
-variable "cluster_public_vlan" {
-  default     = "3078460"
-  description = "the public vlan id"
-  type        = string
-}
 ##############################################################################
 
 ##############################################################################
@@ -61,5 +49,27 @@ variable "cluster_public_vlan" {
 variable cidr_blocks {
     description = "List of CIDR blocks for subnets" 
     default     = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"] 
+}
+
+variable "cluster_private_vlan" {
+  description = "the private vlan id"
+  type        = string
+}
+
+variable "cluster_public_vlan" {
+  description = "the public vlan id"
+  type        = string
+}
+
+variable "pod_subnet" {
+  default     = "172.30.0.0/16"
+  description = "Subnet for K8s Pods"
+  type        = string
+}
+
+variable "service_subnet" {
+  default     = "172.21.0.0/16"
+  description = "Subnet for K8s SVCs"
+  type        = string
 }
 ##############################################################################
