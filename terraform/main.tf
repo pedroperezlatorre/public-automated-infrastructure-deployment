@@ -96,10 +96,10 @@ module "roks_classic" {
   source                  = "./roks_classic"
   unique_id               = var.unique_id
   rg_id                   = ibm_resource_group.resource_group.id
-  ibm_region              = "us-south"
-  cluster_datacenter      = "dal10"
-  cluster_private_vlan    = "3133474"
-  cluster_public_vlan     = "3133472"
+  ibm_region              = "eu-de"
+  cluster_datacenter      = "fra02"
+  cluster_private_vlan    = "3132960"
+  cluster_public_vlan     = "3132962"
   pod_subnet              = "172.30.0.0/16"
   service_subnet          = "172.21.0.0/16"
   machine_type            = "b3c.4x16"
