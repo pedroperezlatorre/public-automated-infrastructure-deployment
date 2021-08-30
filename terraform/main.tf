@@ -59,30 +59,71 @@ provider "kubernetes" {
 
 
 
-# IKS-Classic Cluster
+# # IKS-Classic Cluster
+# ###############################################################################################
+# module "iks_classic" {
+#   source        = "./iks_classic"
+#   unique_id     = var.unique_id
+#   rg_id         = ibm_resource_group.resource_group.id
+#   ibm_region    = var.ibm_region
+#   cluster_datacenter = "fra02"
+#   cluster_private_vlan  = "3132960"
+#   cluster_public_vlan   = "3132962"
+#   pod_subnet               = "172.30.0.0/16"
+#   service_subnet           = "172.21.0.0/16"
+#   machine_type  = "b3c.4x16"
+#   cluster_hardware  = "shared"
+#   default_pool_size  = 1
+#   kube_version  = "1.20.10"
+#   # cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
+#   # Additional WorkerPool
+#   # pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
+#   # pool1_type    = "b3c.4x16"
+# }
+
+# data "ibm_container_cluster_config" "cluster" {
+#   cluster_name_id = module.iks_classic.cluster_id
+#   admin           = true
+# }
+# ###############################################################################################
+
+
+
+
+# ROKS-Classic Cluster
 ###############################################################################################
-module "iks_classic" {
-  source        = "./iks_classic"
-  unique_id     = var.unique_id
-  rg_id         = ibm_resource_group.resource_group.id
-  ibm_region    = var.ibm_region
-  cluster_datacenter = "fra02"
-  cluster_private_vlan  = "3132960"
-  cluster_public_vlan   = "3132962"
-  pod_subnet               = "172.30.0.0/16"
-  service_subnet           = "172.21.0.0/16"
-  machine_type  = "b3c.4x16"
-  cluster_hardware  = "shared"
-  default_pool_size  = 1
-  kube_version  = "1.20.10"
-  # cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
-  # Additional WorkerPool
-  # pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
-  # pool1_type    = "b3c.4x16"
+module "roks_classic" {
+  source                  = "./roks_classic"
+  unique_id               = var.unique_id
+  rg_id                   = ibm_resource_group.resource_group.id
+  ibm_region              = "us-south"
+  cluster_datacenter      = "dal10"
+  cluster_private_vlan    = "3133474"
+  cluster_public_vlan     = "3133472"
+  pod_subnet              = "172.30.0.0/16"
+  service_subnet          = "172.21.0.0/16"
+  machine_type            = "b3c.4x16"
+  cluster_hardware        = "shared"
+  default_pool_size       = 1
+  kube_version            = "4.6.42_openshift"
 }
 
 data "ibm_container_cluster_config" "cluster" {
-  cluster_name_id = module.iks_classic.cluster_id
+  cluster_name_id = module.roks_classic.cluster_id
   admin           = true
 }
 ###############################################################################################
+
+
+# # CLASSIC INFRA VALUES
+# # GERMANY
+#   ibm_region              = "eu-de"
+#   cluster_datacenter      = "fra02"
+#   cluster_private_vlan    = "3132960"
+#   cluster_public_vlan     = "3132962"
+#
+# # US-SOUTH (Dallas)
+#   ibm_region              = "us-south"
+#   cluster_datacenter      = "dal10"
+#   cluster_private_vlan    = "3133474"
+#   cluster_public_vlan     = "3133472"

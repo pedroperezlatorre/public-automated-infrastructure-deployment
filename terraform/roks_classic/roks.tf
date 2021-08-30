@@ -3,7 +3,7 @@
 ##############################################################################
 
 resource "ibm_container_cluster" "cluster" {
-  name                     = "${var.unique_id}-iks-classic"
+  name                     = "${var.unique_id}-roks-classic"
   resource_group_id        = var.rg_id
 
   # Region
