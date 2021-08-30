@@ -29,6 +29,9 @@ resource "ibm_container_cluster" "cluster" {
   service_subnet           = var.service_subnet
   tags                     = ["test"]
 
+  # Cloud Pak
+  entitlement              = "cloud_pak"
+
   # workers_info {
   #   id      = "kube-c4jj6jtd043g7q56rt6g-ikstestusa-default-00000128"
   #   version = "1.20.9"

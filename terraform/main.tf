@@ -102,9 +102,9 @@ module "roks_classic" {
   cluster_public_vlan     = "3132962"
   pod_subnet              = "172.30.0.0/16"
   service_subnet          = "172.21.0.0/16"
-  machine_type            = "b3c.4x16"
+  machine_type            = "b3c.16x64"
   cluster_hardware        = "shared"
-  default_pool_size       = 1
+  default_pool_size       = 3
   kube_version            = "4.6.42_openshift"
 }
 
