@@ -78,3 +78,33 @@ variable "service_subnet" {
   type        = string
 }
 ##############################################################################
+
+##############################################################################
+# Additional Worker Pool
+##############################################################################
+variable wp_size_per_zone {
+    description = "size_per_zone of the additional worker pool" 
+    default     = "0" 
+}
+
+variable wp_machine_type {
+    description = "machine_type of the additional worker pool" 
+    default     = "b3c.16x64" 
+}
+
+variable wp_hardware {
+    description = "hardware of the additional worker pool" 
+    default     = "shared" 
+}
+
+variable wp_disk_encryption {
+    description = "disk_encryption of the additional worker pool" 
+    default     = "true" 
+}
+
+variable wp_worker_pool_name {
+    description = "disk_encryption of the additional worker pool" 
+}
+
+
+##############################################################################
