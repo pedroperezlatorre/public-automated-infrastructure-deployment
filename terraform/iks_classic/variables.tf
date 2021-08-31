@@ -15,6 +15,11 @@ variable "default_pool_size" {
   default     = "1"
 }
 
+variable "worker_num" {
+  description = "Number of workers per zone"
+  default     = "0"
+}
+
 variable "kube_version" {
   description = "Version of the IKS Cluster"
   default     = "1.20.9"

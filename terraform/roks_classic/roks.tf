@@ -12,10 +12,10 @@ resource "ibm_container_cluster" "cluster" {
 
   # Resources
   default_pool_size        = var.default_pool_size
-  # worker_num               = "0"
-  disk_encryption          = "true"
+  worker_num               = var.worker_num
   hardware                 = var.cluster_hardware
   machine_type             = var.machine_type
+  disk_encryption          = "true"
 
   # VLAN
   private_vlan_id          = var.cluster_private_vlan

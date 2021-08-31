@@ -105,6 +105,7 @@ module "roks_classic" {
   machine_type            = "b3c.16x64"
   cluster_hardware        = "shared"
   default_pool_size       = 3
+  worker_num              = 0
   kube_version            = "4.6.42_openshift"
 }
 
