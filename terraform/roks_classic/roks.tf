@@ -12,7 +12,7 @@ resource "ibm_container_cluster" "cluster" {
 
   # Resources
   default_pool_size        = var.default_pool_size
-  worker_num               = var.worker_num
+  # worker_num               = var.worker_num   # must be greater than 0
   hardware                 = var.cluster_hardware
   machine_type             = var.machine_type
   disk_encryption          = "true"
