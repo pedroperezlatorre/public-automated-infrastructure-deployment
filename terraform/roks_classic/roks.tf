@@ -7,7 +7,7 @@ resource "ibm_container_cluster" "cluster" {
   resource_group_id        = var.rg_id
 
   # Region
-  region                   = var.ibm_region
+  # region                   = var.ibm_region
   datacenter               = var.cluster_datacenter
 
   # Resources
