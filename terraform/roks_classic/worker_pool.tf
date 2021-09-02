@@ -8,4 +8,5 @@ resource "ibm_container_worker_pool" "workerpool1" {
   hardware         = var.wp_hardware
   machine_type     = var.wp_machine_type
   size_per_zone    = var.wp_size_per_zone
+  entitlement       = var.wp_entitlement
 }
