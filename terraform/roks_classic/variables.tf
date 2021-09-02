@@ -26,7 +26,7 @@ variable "kube_version" {
 }
 
 variable "entitlement" {
-  description = "Set payment of the Plocu Pak License"
+  description = "Default worker pool payment of the CloudPak License"
   default     = ""
 }
 
@@ -119,6 +119,11 @@ variable wp_disk_encryption {
 
 variable wp_worker_pool_name {
     description = "disk_encryption of the additional worker pool" 
+}
+
+variable wp_entitlement {
+  description = "Additional worker pool payment of the CloudPak License"
+  default     = ""
 }
 
 
