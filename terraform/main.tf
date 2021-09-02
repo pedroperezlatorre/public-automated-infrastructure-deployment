@@ -108,7 +108,7 @@ module "roks_classic" {
   # worker_num              = 0   # must be greater than 0
   kube_version            = "4.6.42_openshift"
   # Additional Worker Pool
-  wp_deploy               = true
+  wp_deploy               = false
   wp_worker_pool_name     = "workerpool1"
   wp_size_per_zone        = 1
   wp_machine_type         = "b3c.16x64"
