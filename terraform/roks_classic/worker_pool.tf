@@ -1,5 +1,5 @@
 resource "ibm_container_worker_pool" "workerpool1" {
-  count = var.worker_num > 0 ? 1 : 0
+  count = var.wp_deploy ? 1 : 0
 
   worker_pool_name = var.wp_worker_pool_name
   cluster          = ibm_container_cluster.cluster.id

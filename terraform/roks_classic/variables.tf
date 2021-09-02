@@ -82,6 +82,11 @@ variable "service_subnet" {
 ##############################################################################
 # Additional Worker Pool
 ##############################################################################
+variable wp_deploy {
+    description = "size_per_zone of the additional worker pool" 
+    default     = false 
+}
+
 variable wp_size_per_zone {
     description = "size_per_zone of the additional worker pool" 
     default     = "0" 

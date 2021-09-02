@@ -1,5 +1,5 @@
 resource "ibm_container_worker_pool_zone_attachment" "workerpool1_zone_attach" {
-  count = var.worker_num > 0 ? 1 : 0
+  count = var.wp_deploy ? 1 : 0
 
   cluster         = ibm_container_cluster.cluster.id
   private_vlan_id = var.cluster_private_vlan
