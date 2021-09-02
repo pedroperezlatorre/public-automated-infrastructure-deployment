@@ -42,6 +42,11 @@ variable "cluster_hardware" {
   type        = string
 }
 
+variable "disk_encryption" {
+  default     = "true"
+  description = "Default worker pool disk encryption"
+}
+
 variable "pool1_type" {
   description = "machine_type for Worker Pool 1"
   default     = "bx2.4x16"

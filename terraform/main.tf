@@ -102,15 +102,19 @@ module "roks_classic" {
   cluster_public_vlan     = "3136362"
   pod_subnet              = "172.30.0.0/16"
   service_subnet          = "172.21.0.0/16"
-  machine_type            = "b3c.16x64"
-  cluster_hardware        = "shared"
-  default_pool_size       = 3
   # worker_num              = 0   # must be greater than 0
 
   # ROKS or IKS
   kube_version            = "4.6.42_openshift" # ROKS or IKS
-  entitlement             = "cloud_pak" # Cloud Pak License: set only when you create the cluster
-  
+
+  # Default Worker Pool
+  machine_type            = "b3c.16x64"
+  cluster_hardware        = "shared"
+  default_pool_size       = 3
+  entitlement             = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
+  disk_encryption          = "true"
+
+
   # Additional Worker Pool
   wp_deploy               = false
   wp_worker_pool_name     = "workerpool1"
@@ -118,6 +122,7 @@ module "roks_classic" {
   wp_machine_type         = "b3c.16x64"
   wp_hardware             = "shared"
   wp_disk_encryption      = "true"
+  wp_entitlement          = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
 
 }
 

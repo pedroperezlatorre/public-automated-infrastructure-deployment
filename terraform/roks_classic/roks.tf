@@ -15,7 +15,7 @@ resource "ibm_container_cluster" "cluster" {
   # worker_num               = var.worker_num   # must be greater than 0
   hardware                 = var.cluster_hardware
   machine_type             = var.machine_type
-  disk_encryption          = "true"
+  disk_encryption          = var.disk_encryption
 
   # VLAN
   private_vlan_id          = var.cluster_private_vlan
