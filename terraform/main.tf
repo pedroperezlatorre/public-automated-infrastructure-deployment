@@ -106,7 +106,11 @@ module "roks_classic" {
   cluster_hardware        = "shared"
   default_pool_size       = 3
   # worker_num              = 0   # must be greater than 0
-  kube_version            = "4.6.42_openshift"
+
+  # ROKS or IKS
+  kube_version            = "4.6.42_openshift" # ROKS or IKS
+  entitlement             = "cloud_pak" # Cloud Pak License: set only when you create the cluster
+  
   # Additional Worker Pool
   wp_deploy               = false
   wp_worker_pool_name     = "workerpool1"

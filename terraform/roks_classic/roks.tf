@@ -30,7 +30,7 @@ resource "ibm_container_cluster" "cluster" {
   tags                     = ["test"]
 
   # Cloud Pak
-  entitlement              = "cloud_pak"
+  entitlement              = var.entitlement
 
   # workers_info {
   #   id      = "kube-c4jj6jtd043g7q56rt6g-ikstestusa-default-00000128"

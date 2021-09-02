@@ -22,7 +22,12 @@ variable "worker_num" {
 
 variable "kube_version" {
   description = "Version of the IKS Cluster"
-  default     = "1.20.9"
+  default     = "1.20.10"
+}
+
+variable "entitlement" {
+  description = "Set payment of the Plocu Pak License"
+  default     = ""
 }
 
 variable "cluster_datacenter" {
