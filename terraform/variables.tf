@@ -123,6 +123,12 @@ variable language_translator_plan {
   description = "Language Translator plan"
   default     = "lite"
 }
+
+variable language_translator_role {
+  description = "Language Translator role"
+  default     = ""
+}
+
 ##############################################################################
 
 ##############################################################################
