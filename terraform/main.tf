@@ -116,7 +116,7 @@ module "roks_classic" {
 
 
   # Additional Worker Pool
-  wp_deploy               = false
+  wp_deploy               = true
   wp_worker_pool_name     = "workerpool1"
   wp_size_per_zone        = 1
   wp_machine_type         = "b3c.16x64"
