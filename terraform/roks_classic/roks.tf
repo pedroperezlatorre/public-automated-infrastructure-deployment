@@ -38,13 +38,6 @@ resource "ibm_container_cluster" "cluster" {
   # }
 }
 
-
-resource "kubernetes_namespace" "prod" {
-  metadata {
-    name = var.unique_id
-  }
-}
-
 # resource "ibm_container_cluster" "tfer--mycluster-002D-dal10-002D-b3c-002E-4x16" {
 #   datacenter               = "dal10"
 #   default_pool_size        = "1"
@@ -68,6 +61,3 @@ resource "kubernetes_namespace" "prod" {
 #     version = "4.6.42"
 #   }
 # }
-
-
-
