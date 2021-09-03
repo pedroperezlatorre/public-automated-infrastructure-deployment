@@ -6,6 +6,13 @@ provider "kubernetes" {
   client_key             = data.ibm_container_cluster_config.cluster.admin_key
   cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
 }
+
+resource "kubernetes_namespace" "prod" {
+  metadata {
+    name = var.unique_id
+  }
+}
+
 ###############################################################################################
 
 
