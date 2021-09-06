@@ -19,7 +19,7 @@ resource "ibm_container_alb" "disable_public_alb2" {
 
   depends_on = [
     ibm_container_cluster.cluster,
-    ibm_container_worker_pool_zone_attachment.workerpool1_zone_attach[0]
+    ibm_container_worker_pool_zone_attachment.zone
   ]
 
   alb_id = [
