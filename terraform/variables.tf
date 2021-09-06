@@ -125,8 +125,8 @@ variable language_translator_plan {
 }
 
 variable language_translator_role {
-  description = "Language Translator role"
-  default     = ""
+  description = "Language Translator role - Valid roles are Manager, Writer, Reader, Viewer, Administrator, Operator, Editor"
+  default     = "Reader"
 }
 
 ##############################################################################
