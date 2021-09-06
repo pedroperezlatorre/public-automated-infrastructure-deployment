@@ -119,7 +119,7 @@ module "roks_classic" {
   wp_deploy               = false
   wp_worker_pool_name     = "workerpool1"
   wp_size_per_zone        = 1
-  wp_machine_type         = "b3c.16x64"
+  wp_machine_type         = "b3c.4x16"
   wp_hardware             = "shared"
   wp_disk_encryption      = "true"
   wp_entitlement          = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
