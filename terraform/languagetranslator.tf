@@ -21,7 +21,7 @@ resource "ibm_container_bind_service" "language_translator_service_binding" {
   cluster_name_id       = module.roks_classic.cluster_id
   service_instance_name = ibm_resource_instance.language_translator_instance.name
   namespace_id          = var.unique_id
-  resource_group_id     = var.resource_group_id
+  resource_group_id     = module.roks_classic.resource_group_id
   key                   = ibm_resource_key.language_translator_key.name
 }
 ##############################################################################
