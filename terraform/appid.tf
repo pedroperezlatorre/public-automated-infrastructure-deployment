@@ -23,7 +23,7 @@ resource "ibm_resource_instance" "appid" {
 # Pass credentials to K8S
 ######################################################
  resource "ibm_container_bind_service" "appid_service_binding" {
-     depends_on = [ibm_container_cluster.openshift_cluster, ibm_resource_key.appid_key]
+     depends_on = [kubernetes_namespace.prod]
      #   count = length(var.environments)
      cluster_name_id       = module.roks_classic.cluster_id
      service_instance_name = ibm_resource_instance.appid.name
