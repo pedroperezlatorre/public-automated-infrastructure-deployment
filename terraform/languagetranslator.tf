@@ -11,13 +11,13 @@ resource "ibm_resource_instance" "language_translator_instance" {
 # Service Credentials
 ##############################################################################
 
-resource "ibm_resource_key" "translator_key" {
-  name                 = "${ibm_resource_instance.translator_instance.name}-key"
+resource "ibm_resource_key" "language_translator_key" {
+  name                 = "${ibm_resource_instance.language_translator_instance.name}-key"
   role                 = var.language_translator_role
   resource_instance_id = ibm_resource_instance.language_translator_instance.id
 }
 
-resource "ibm_container_bind_service" "translator_service_binding" {
+resource "ibm_container_bind_service" "language_translator_service_binding" {
   cluster_name_id       = ibm_container_cluster.cluster.id
   service_instance_name = ibm_resource_instance.language_translator_instance.name
   namespace_id          = var.unique_id
