@@ -16,7 +16,7 @@ resource "ibm_resource_instance" "appid" {
 
  resource "ibm_resource_key" "appid_key" {
    name                 = "${ibm_resource_instance.appid.name}-key"
-   role                 = va.appid_key_role
+   role                 = var.appid_key_role
    resource_instance_id = ibm_resource_instance.appid.id
  }
 
