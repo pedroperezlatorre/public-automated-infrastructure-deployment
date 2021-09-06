@@ -18,7 +18,7 @@ resource "ibm_resource_key" "language_translator_key" {
 }
 
 resource "ibm_container_bind_service" "language_translator_service_binding" {
-  cluster_name_id       = ibm_container_cluster.cluster.id
+  cluster_name_id       = ibm_container_cluster.cluster.name
   service_instance_name = ibm_resource_instance.language_translator_instance.name
   namespace_id          = var.unique_id
   resource_group_id     = var.resource_group_id
