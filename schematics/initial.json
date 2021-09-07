@@ -80,6 +80,11 @@
             "type": "string"
           },
           {
+            "name": "w_assistant_role",
+            "value": "Writer",
+            "type": "string"
+          },
+          {
             "name": "w_knowledgecatalog_plan",
             "value": "lite",
             "type": "string"
@@ -97,6 +102,11 @@
           {
             "name": "language_translator_plan",
             "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "language_translator_role",
+            "value": "Reader",
             "type": "string"
           },
           {

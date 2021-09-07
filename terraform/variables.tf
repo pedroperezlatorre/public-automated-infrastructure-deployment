@@ -96,6 +96,11 @@ variable w_assistant_plan {
   description = "Watson Assistant plan"
   default     = "free"
 }
+
+variable w_assistant_role {
+  description = "Watson Assistant role"
+  default     = "Writer"
+}
 ##############################################################################
 
 ##############################################################################
