@@ -217,9 +217,9 @@ variable logdna_plan {
   default     = "lite"
 }
 
-variable logdna_key_role {
-  description = "LogDNA key role (Manager, Reader, Standard Member, Viewer, Administrator, Operator, Editor)"
-  type        = string
-  default     = ""
-}
+# variable logdna_key_role {
+#   description = "LogDNA key role (Manager, Reader, Standard Member, Viewer, Administrator, Operator, Editor)"
+#   type        = string
+#   default     = ""
+# }
 ##############################################################################
