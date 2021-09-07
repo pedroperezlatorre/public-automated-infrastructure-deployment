@@ -214,7 +214,7 @@ variable appid_key_role {
 variable logdna_plan {
   description = "LogDNA plan (lite, standard or plus)"
   type        = string
-  default     = ""
+  default     = "lite"
 }
 
 variable logdna_key_role {
