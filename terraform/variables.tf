@@ -205,3 +205,21 @@ variable appid_key_role {
   default     = "Reader"
 }
 ##############################################################################
+
+
+
+##############################################################################
+# LogDNA Variables
+##############################################################################
+variable logdna_plan {
+  description = "LogDNA plan (lite, standard or plus)"
+  type        = string
+  default     = ""
+}
+
+variable logdna_key_role {
+  description = "LogDNA key role"
+  type        = string
+  default     = ""
+}
+##############################################################################
