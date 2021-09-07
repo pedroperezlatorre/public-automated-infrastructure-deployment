@@ -220,6 +220,6 @@ variable logdna_plan {
 variable logdna_key_role {
   description = "LogDNA key role (Manager, Reader, Standard Member, Viewer, Administrator, Operator, Editor)"
   type        = string
-  default     = "Reader"
+  default     = "Viewer"
 }
 ##############################################################################
