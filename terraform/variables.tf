@@ -85,6 +85,10 @@ variable wml_plan {
   description = "Watson Machine Learning plan"
   default     = "lite"
 }
+variable wml_role {
+  description = "Watson Machine Learning role"
+  default     = "Reader"
+}
 ##############################################################################
 
 

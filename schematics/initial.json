@@ -100,6 +100,11 @@
           "type": "string"
           },
           {
+            "name": "wml_role",
+            "value": "",
+            "type": "string"
+            },
+          {
             "name": "language_translator_plan",
             "value": "lite",
             "type": "string"
