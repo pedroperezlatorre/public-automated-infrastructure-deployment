@@ -223,3 +223,21 @@ variable logdna_plan {
 #   default     = ""
 # }
 ##############################################################################
+
+
+##############################################################################
+# Container Registry Variables
+##############################################################################
+variable registry_plan {
+  description = "registry plan (lite, standard or plus)"
+  type        = string
+  default     = "lite"
+}
+
+variable registry_key_role {
+  description = "registry key role"
+  type        = string
+  default     = "Reader"
+}
+##############################################################################
+
