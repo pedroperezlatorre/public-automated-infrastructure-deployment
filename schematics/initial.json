@@ -101,7 +101,7 @@
           },
           {
             "name": "wml_role",
-            "value": "",
+            "value": "Viewer",
             "type": "string"
             },
           {
@@ -111,7 +111,7 @@
           },
           {
             "name": "language_translator_role",
-            "value": "Viewer",
+            "value": "Reader",
             "type": "string"
           },
           {
