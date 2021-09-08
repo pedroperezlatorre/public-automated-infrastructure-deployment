@@ -38,7 +38,7 @@ resource "null_resource" "registry" {
     command = "ibmcloud login --apikey $IBMCLOUD_API_KEY -a \"https://cloud.ibm.com\" -r $REGION && (echo \"y\" | ibmcloud cr plan-upgrade standard)"
     environment = {
       IBMCLOUD_API_KEY = var.ibmcloud_api_key
-      REGION           = var.region
+      REGION           = var.ibm_region
     }
   }
 }
