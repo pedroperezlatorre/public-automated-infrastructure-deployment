@@ -111,7 +111,7 @@
           },
           {
             "name": "language_translator_role",
-            "value": "Reader",
+            "value": "Viewer",
             "type": "string"
           },
           {
