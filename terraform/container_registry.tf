@@ -35,7 +35,7 @@
 
 resource "null_resource" "registry" {
   provisioner "local-exec" {
-    command = "ibmcloud login --apikey $IBMCLOUD_API_KEY -a \"https://cloud.ibm.com\" -r $REGION && (echo \"y\" | ibmcloud cr plan-upgrade standard) && ibmcloud target -g $RESOURCE_GROUP && ibmcloud cr namespace-add -g $RESOURCE_GROUP "
+    command = "ibmcloud login --apikey $IBMCLOUD_API_KEY -a \"https://cloud.ibm.com\" -r $REGION && (echo \"y\" | ibmcloud cr plan-upgrade standard) && ibmcloud target -g $RESOURCE_GROUP && ibmcloud cr namespace-add -g $RESOURCE_GROUP $NAMESPACE_NAME"
     environment = {
       IBMCLOUD_API_KEY  = var.ibmcloud_api_key
       REGION            = var.ibm_region
