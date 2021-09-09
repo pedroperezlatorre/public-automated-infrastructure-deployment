@@ -161,6 +161,10 @@ variable natural_language_classifier_plan {
   description = "Natural Language Classifier plan"
   default     = "standard"
 }
+variable natural_language_classifier_role {
+  description = "Natural Language Classifier role"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################
