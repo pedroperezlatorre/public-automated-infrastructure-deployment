@@ -12,7 +12,7 @@ resource "ibm_resource_instance" "natural_language_classifier_instance" {
 ##############################################################################
 
 resource "ibm_resource_key" "natural_language_classifier_key" {
-  name                 = "${ibm_resource_instance.natural_language_classifierclassifier_instance.name}-key"
+  name                 = "${ibm_resource_instance.natural_language_classifier_instance.name}-key"
   role                 = var.natural_language_classifier_role
   resource_instance_id = ibm_resource_instance.natural_language_classifier_instance.id
 }
