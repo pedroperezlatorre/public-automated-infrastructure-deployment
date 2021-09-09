@@ -193,6 +193,11 @@ variable w_discovery_plan {
   description = "Watson Discovery plan"
   default     = "lite"
 }
+
+variable w_discovery_role {
+  description = "Watson Discovery role - Manager, Reader, Writer"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################

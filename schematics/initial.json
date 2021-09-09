@@ -145,6 +145,11 @@
             "type": "string"
           },
           {
+            "name": "w_discovery_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "openscale_plan",
             "value": "lite",
             "type": "string"
