@@ -47,5 +47,7 @@ resource "null_resource" "registry" {
 }
 
 data "local_file" "registry_url" {
+    depends_on = [null_resource.registry]
+
     filename = "/tmp/registryURL"
 }
