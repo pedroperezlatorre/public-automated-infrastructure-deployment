@@ -130,6 +130,11 @@
             "type": "string"
           },
           {
+            "name": "speechtotext_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "texttospeech_plan",
             "value": "lite",
             "type": "string"

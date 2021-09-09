@@ -166,6 +166,10 @@ variable speechtotext_plan {
   description = "Speech To Text plan"
   default     = "lite"
 }
+variable speechtotext_role {
+  description = "Speech To Text role"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################
