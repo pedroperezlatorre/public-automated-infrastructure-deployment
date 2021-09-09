@@ -135,6 +135,11 @@
             "type": "string"
           },
           {
+            "name": "texttospeech_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "toneanalyzer_plan",
             "value": "lite",
             "type": "string"
