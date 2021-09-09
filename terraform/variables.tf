@@ -87,7 +87,7 @@ variable wml_plan {
 }
 variable wml_role {
   description = "Watson Machine Learning role - Valid roles are Writer, Manager, Viewer, Administrator, Operator, Editor"
-  default     = "Viewer"
+  default     = "Writer"
 }
 ##############################################################################
 

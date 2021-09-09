@@ -101,7 +101,7 @@
           },
           {
             "name": "wml_role",
-            "value": "Viewer",
+            "value": "Writer",
             "type": "string"
             },
           {
