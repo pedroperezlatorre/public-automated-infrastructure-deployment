@@ -147,6 +147,10 @@ variable natural_language_understanding_plan {
   description = "Natural Language Understanding plan"
   default     = "free"
 }
+variable natural_language_understanding_role {
+  description = "Natural Language Understanding role"
+  default     = ""
+}
 ##############################################################################
 
 

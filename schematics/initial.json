@@ -120,6 +120,11 @@
             "type": "string"
           },
           {
+            "name": "natural_language_understanding_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "natural_language_classifier_plan",
             "value": "standard",
             "type": "string"
