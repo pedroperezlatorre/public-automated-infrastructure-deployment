@@ -43,6 +43,9 @@ resource "null_resource" "registry" {
       RESOURCE_GROUP    = var.resource_groups_name
       NAMESPACE_NAME    = "${var.unique_id}-crn"
     }
+    triggers = {
+      always_run = "${timestamp()}"
+    }
   }
 }
 
