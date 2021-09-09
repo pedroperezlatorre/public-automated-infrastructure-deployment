@@ -140,6 +140,11 @@
             "type": "string"
           },
           {
+            "name": "toneanalyzer_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "w_discovery_plan",
             "value": "lite",
             "type": "string"

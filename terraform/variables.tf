@@ -184,6 +184,10 @@ variable toneanalyzer_plan {
   description = "Tone Analyzer plan"
   default     = "lite"
 }
+variable toneanalyzer_role {
+  description = "Tone Analyzer role"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################
