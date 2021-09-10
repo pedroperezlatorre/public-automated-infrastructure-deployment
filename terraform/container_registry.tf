@@ -60,7 +60,7 @@ data "local_file" "registry_url" {
 ######################################################
 resource "kubernetes_secret" "registry_credentials" {
   metadata {
-    name = "registry_credentials"
+    name = "registry-credentials"
   }
 
   data = {
