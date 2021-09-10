@@ -58,6 +58,7 @@ data "local_file" "registry_url" {
 
 # Pass credentials to K8S
 ######################################################
+# Usage: https://cloud.ibm.com/apidocs/container-registry
 resource "kubernetes_secret" "registry_credentials" {
   metadata {
     name = "registry-credentials"
@@ -65,6 +66,7 @@ resource "kubernetes_secret" "registry_credentials" {
 
   data = {
     host        = data.local_file.registry_url.content
+    endpoint    = "https://${data.local_file.registry_url.content}"
     # port      = ibm_resource_key.db2_key.credentials["connection.db2.hosts.0.port"]
     # dbname    = ibm_resource_key.db2_key.credentials["connection.db2.database"]
     username  = ""
