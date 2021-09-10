@@ -55,3 +55,22 @@ data "local_file" "registry_url" {
 
     filename = "/tmp/registryURL"
 }
+
+# Pass credentials to K8S
+######################################################
+resource "kubernetes_secret" "registry_credentials" {
+  metadata {
+    name = "registry_credentials"
+  }
+
+  data = {
+    host        = data.local_file.registry_url.content
+    # port      = ibm_resource_key.db2_key.credentials["connection.db2.hosts.0.port"]
+    # dbname    = ibm_resource_key.db2_key.credentials["connection.db2.database"]
+    # username  = ibm_resource_key.db2_key.credentials["connection.db2.authentication.username"]
+    # password  = ibm_resource_key.db2_key.credentials["connection.db2.authentication.password"]
+    # method    = ibm_resource_key.db2_key.credentials["connection.db2.authentication.method"]
+  }
+  type = "kubernetes.io/basic-auth"
+}
+######################################################
