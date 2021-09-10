@@ -62,7 +62,7 @@ data "local_file" "registry_url" {
 resource "kubernetes_secret" "registry_credentials" {
 
   depends_on = [
-    resource.kubernetes_namespace.prod.namespace.name
+    resource.kubernetes_namespace.prod
   ]
   metadata {
     name      = "registry-credentials"
