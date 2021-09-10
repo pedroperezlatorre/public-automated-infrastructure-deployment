@@ -2,8 +2,8 @@ resource "ibm_resource_instance" "w_discovery_instance" {
   name              = "${var.unique_id}-w-discovery"
   service           = "discovery"
   plan              = var.w_discovery_plan
-  # location          = var.ibm_region  --> check lite plan zone availability 
-  location          = "eu-gb"
+  location          = var.ibm_region
+  # location          = "eu-gb"  --> check lite plan region availability 
   resource_group_id = ibm_resource_group.resource_group.id
 }
 
