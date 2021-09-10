@@ -85,6 +85,10 @@ variable wml_plan {
   description = "Watson Machine Learning plan"
   default     = "lite"
 }
+variable wml_role {
+  description = "Watson Machine Learning role - Valid roles are Writer, Manager, Viewer, Administrator, Operator, Editor"
+  default     = "Writer"
+}
 ##############################################################################
 
 
@@ -95,6 +99,11 @@ variable wml_plan {
 variable w_assistant_plan {
   description = "Watson Assistant plan"
   default     = "free"
+}
+
+variable w_assistant_role {
+  description = "Watson Assistant role"
+  default     = "Writer"
 }
 ##############################################################################
 
@@ -123,6 +132,12 @@ variable language_translator_plan {
   description = "Language Translator plan"
   default     = "lite"
 }
+
+variable language_translator_role {
+  description = "Language Translator role - Valid roles are Manager, Writer, Reader, Viewer, Administrator, Operator, Editor"
+  default     = "Reader"
+}
+
 ##############################################################################
 
 ##############################################################################
@@ -131,6 +146,10 @@ variable language_translator_plan {
 variable natural_language_understanding_plan {
   description = "Natural Language Understanding plan"
   default     = "free"
+}
+variable natural_language_understanding_role {
+  description = "Natural Language Understanding role"
+  default     = ""
 }
 ##############################################################################
 
@@ -142,6 +161,10 @@ variable natural_language_classifier_plan {
   description = "Natural Language Classifier plan"
   default     = "standard"
 }
+variable natural_language_classifier_role {
+  description = "Natural Language Classifier role"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################
@@ -150,6 +173,10 @@ variable natural_language_classifier_plan {
 variable speechtotext_plan {
   description = "Speech To Text plan"
   default     = "lite"
+}
+variable speechtotext_role {
+  description = "Speech To Text role"
+  default     = ""
 }
 ##############################################################################
 
@@ -160,6 +187,10 @@ variable texttospeech_plan {
   description = "Text To Speech plan"
   default     = "lite"
 }
+variable texttospeech_role {
+  description = "Text To Speech role"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################
@@ -169,6 +200,10 @@ variable toneanalyzer_plan {
   description = "Tone Analyzer plan"
   default     = "lite"
 }
+variable toneanalyzer_role {
+  description = "Tone Analyzer role"
+  default     = ""
+}
 ##############################################################################
 
 ##############################################################################
@@ -177,6 +212,11 @@ variable toneanalyzer_plan {
 variable w_discovery_plan {
   description = "Watson Discovery plan"
   default     = "lite"
+}
+
+variable w_discovery_role {
+  description = "Watson Discovery role - Manager, Reader, Writer"
+  default     = ""
 }
 ##############################################################################
 

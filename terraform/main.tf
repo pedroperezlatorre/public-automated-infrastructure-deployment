@@ -6,6 +6,13 @@ provider "kubernetes" {
   client_key             = data.ibm_container_cluster_config.cluster.admin_key
   cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
 }
+
+resource "kubernetes_namespace" "prod" {
+  metadata {
+    name = var.unique_id
+  }
+}
+
 ###############################################################################################
 
 
@@ -98,8 +105,8 @@ module "roks_classic" {
   rg_id                   = ibm_resource_group.resource_group.id
   ibm_region              = "us-south"
   cluster_datacenter      = "dal10"
-  cluster_private_vlan    = "3136364"
-  cluster_public_vlan     = "3136362"
+  cluster_private_vlan    = "3133366"
+  cluster_public_vlan     = "3133364"
   pod_subnet              = "172.30.0.0/16"
   service_subnet          = "172.21.0.0/16"
   # worker_num              = 0   # must be greater than 0
@@ -110,7 +117,7 @@ module "roks_classic" {
   # Default Worker Pool
   machine_type            = "b3c.16x64"
   cluster_hardware        = "shared"
-  default_pool_size       = 3
+  default_pool_size       = 1
   entitlement             = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
   disk_encryption          = "true"
 
@@ -145,3 +152,7 @@ data "ibm_container_cluster_config" "cluster" {
 #   cluster_datacenter      = "dal10"
 #   cluster_private_vlan    = "3136364"
 #   cluster_public_vlan     = "3136362"
+
+# Pedro
+#   cluster_private_vlan    = "3133366"
+#   cluster_public_vlan     = "3133364"

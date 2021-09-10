@@ -80,6 +80,11 @@
             "type": "string"
           },
           {
+            "name": "w_assistant_role",
+            "value": "Writer",
+            "type": "string"
+          },
+          {
             "name": "w_knowledgecatalog_plan",
             "value": "lite",
             "type": "string"
@@ -95,8 +100,18 @@
           "type": "string"
           },
           {
+            "name": "wml_role",
+            "value": "Writer",
+            "type": "string"
+            },
+          {
             "name": "language_translator_plan",
             "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "language_translator_role",
+            "value": "Reader",
             "type": "string"
           },
           {
@@ -105,8 +120,18 @@
             "type": "string"
           },
           {
+            "name": "natural_language_understanding_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "natural_language_classifier_plan",
             "value": "standard",
+            "type": "string"
+          },
+          {
+            "name": "natural_language_classifier_role",
+            "value": "Manager",
             "type": "string"
           },
           {
@@ -115,8 +140,18 @@
             "type": "string"
           },
           {
+            "name": "speechtotext_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "texttospeech_plan",
             "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "texttospeech_role",
+            "value": "Manager",
             "type": "string"
           },
           {
@@ -125,8 +160,18 @@
             "type": "string"
           },
           {
+            "name": "toneanalyzer_role",
+            "value": "Manager",
+            "type": "string"
+          },
+          {
             "name": "w_discovery_plan",
             "value": "lite",
+            "type": "string"
+          },
+          {
+            "name": "w_discovery_role",
+            "value": "Manager",
             "type": "string"
           },
           {
