@@ -70,8 +70,8 @@ resource "kubernetes_secret" "registry_credentials" {
   }
 
   data = {
-    host        = trimspaces(data.local_file.registry_url.content)
-    endpoint    = "https://${trimspaces(data.local_file.registry_url.content)}/${var.unique_id}-crn"
+    host        = trimspace(data.local_file.registry_url.content)
+    endpoint    = "https://${trimspace(data.local_file.registry_url.content)}/${var.unique_id}-crn"
     apikey      = var.ibmcloud_api_key
     # port      = ibm_resource_key.db2_key.credentials["connection.db2.hosts.0.port"]
     # dbname    = ibm_resource_key.db2_key.credentials["connection.db2.database"]
