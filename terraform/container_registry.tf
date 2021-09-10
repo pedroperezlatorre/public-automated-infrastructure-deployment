@@ -60,8 +60,13 @@ data "local_file" "registry_url" {
 ######################################################
 # Usage: https://cloud.ibm.com/apidocs/container-registry
 resource "kubernetes_secret" "registry_credentials" {
+
+  depends_on = [
+    resource.kubernetes_namespace.prod.namespace.name
+  ]
   metadata {
-    name = "registry-credentials"
+    name      = "registry-credentials"
+    namespace = var.unique_id
   }
 
   data = {
