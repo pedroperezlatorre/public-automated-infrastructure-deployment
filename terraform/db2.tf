@@ -20,7 +20,7 @@ resource "ibm_resource_key" "db2_key" {
 
 # Pass credentials to K8S
 ######################################################
- resource "ibm_container_bind_service" "appid_service_binding" {
+ resource "ibm_container_bind_service" "db2_service_binding" {
      depends_on = [kubernetes_namespace.prod]
      #   count = length(var.environments)
      cluster_name_id       = module.roks_classic.cluster_id
