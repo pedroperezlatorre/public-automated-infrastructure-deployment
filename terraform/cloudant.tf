@@ -18,22 +18,15 @@ resource "ibm_resource_key" "cloudant_key" {
   resource_instance_id = ibm_resource_instance.cloudant_instance.id
 }
 
-# Pass Cloudant credentials to K8S
+# Pass credentials to K8S
 ######################################################
-resource "kubernetes_secret" "cloudant_credentials" {
-  metadata {
-    name = "cloudant-credentials"
-  }
-
-  data = {
-    host      = ibm_resource_key.cloudant_key.credentials.host
-    port      = ibm_resource_key.cloudant_key.credentials.port
-    url       = ibm_resource_key.cloudant_key.credentials.url
-    username  = ibm_resource_key.cloudant_key.credentials.username
-    password  = ibm_resource_key.cloudant_key.credentials.password
-
-  }
-
-  type = "kubernetes.io/basic-auth"
+ resource "ibm_container_bind_service" "appid_service_binding" {
+     depends_on = [kubernetes_namespace.prod]
+     #   count = length(var.environments)
+     cluster_name_id       = module.roks_classic.cluster_id
+     service_instance_name = ibm_resource_instance.cloudant_instance.name
+     namespace_id          = var.unique_id
+     resource_group_id     = ibm_resource_group.resource_group.id
+     key                   = ibm_resource_key.cloudant_key.name
 }
 ######################################################
