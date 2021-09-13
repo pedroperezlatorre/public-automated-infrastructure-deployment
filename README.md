@@ -34,18 +34,6 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &type=<IBM-GIT-PROVIDER-TYPE>
 &customer=<CUSTOMER-NAME>
 ```
-```
-https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
-&region_name=<IBM-REGION>
-&repository=<INFRASTRUCTURE-REPO-URL>
-&branch=<INFRASTRUCTURE-REPO-BRANCH>
-&repository_token=<INFRASTRUCTURE-REPO-TOKEN>
-&apiKey=<IBM-API-KEY>
-&toolchain_name=<TOOLCHAIN-NAME>
-&source_provider=<IBM-GIT-PROVIDER>
-&type=<IBM-GIT-PROVIDER-TYPE>
-&customer=<CUSTOMER-NAME>
-```
 
 - **IBM-REGION**: Region where you want to deploy every objects -> ```$ ibmcloud regions```
 - **INFRASTRUCTURE-REPO-URL**: URL of the Git infrastructure repo -> ```https://github.ibm.com/tech-garage-spgi/infra-repo```
