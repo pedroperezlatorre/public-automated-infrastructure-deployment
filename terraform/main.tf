@@ -104,8 +104,8 @@ module "roks_classic" {
   rg_id                   = ibm_resource_group.resource_group.id
   ibm_region              = "us-south"
   cluster_datacenter      = "dal10"
-  cluster_private_vlan    = "3133366"
-  cluster_public_vlan     = "3133364"
+  cluster_private_vlan    = "3136364"
+  cluster_public_vlan     = "3136362"
   pod_subnet              = "172.30.0.0/16"
   service_subnet          = "172.21.0.0/16"
   # worker_num              = 0   # must be greater than 0
