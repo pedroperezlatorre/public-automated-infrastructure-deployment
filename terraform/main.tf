@@ -6,6 +6,12 @@ provider "kubernetes" {
   client_key             = data.ibm_container_cluster_config.cluster.admin_key
   cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
 }
+
+resource "kubernetes_namespace" "prod" {
+  metadata {
+    name = var.unique_id
+  }
+}
 ###############################################################################################
 
 
@@ -108,9 +114,9 @@ module "roks_classic" {
   kube_version            = "4.6.42_openshift" # ROKS or IKS
 
   # Default Worker Pool
-  machine_type            = "b3c.16x64"
+  machine_type            = "b3c.4x16"  # "b3c.16x64"
   cluster_hardware        = "shared"
-  default_pool_size       = 3
+  default_pool_size       = 1
   entitlement             = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
   disk_encryption          = "true"
 
@@ -145,3 +151,7 @@ data "ibm_container_cluster_config" "cluster" {
 #   cluster_datacenter      = "dal10"
 #   cluster_private_vlan    = "3136364"
 #   cluster_public_vlan     = "3136362"
+
+# Pedro
+#   cluster_private_vlan    = "3133366"
+#   cluster_public_vlan     = "3133364"
