@@ -228,3 +228,56 @@ variable openscale_plan {
   default     = "lite"
 }
 ##############################################################################
+
+
+##############################################################################
+# AppID Variables
+##############################################################################
+variable appid_plan {
+  description = "AppId plan (lite, standard or plus)"
+  type        = string
+  default     = "lite"
+}
+
+variable appid_key_role {
+  description = "AppId key role"
+  type        = string
+  default     = "Reader"
+}
+##############################################################################
+
+
+
+##############################################################################
+# LogDNA Variables
+##############################################################################
+variable logdna_plan {
+  description = "LogDNA plan (lite, standard or plus)"
+  type        = string
+  default     = "lite"
+}
+
+# variable logdna_key_role {
+#   description = "LogDNA key role (Manager, Reader, Standard Member, Viewer, Administrator, Operator, Editor)"
+#   type        = string
+#   default     = ""
+# }
+##############################################################################
+
+
+##############################################################################
+# Container Registry Variables
+##############################################################################
+variable registry_plan {
+  description = "registry plan (lite, standard or plus)"
+  type        = string
+  default     = "lite"
+}
+
+variable registry_key_role {
+  description = "registry key role"
+  type        = string
+  default     = "Reader"
+}
+##############################################################################
+
