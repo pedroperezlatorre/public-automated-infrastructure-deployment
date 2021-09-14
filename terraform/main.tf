@@ -102,7 +102,6 @@ module "roks_classic" {
   source                  = "./roks_classic"
   unique_id               = var.unique_id
   rg_id                   = ibm_resource_group.resource_group.id
-  ibm_region              = "us-south"
   cluster_datacenter      = "dal10"
   cluster_private_vlan    = "3136364"
   cluster_public_vlan     = "3136362"
