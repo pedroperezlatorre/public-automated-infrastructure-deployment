@@ -49,7 +49,7 @@
 # K8S-Classic Cluster
 ###############################################################################################
 module "k8s_service" {
-  source                  = "./roks_classic"
+  source                  = "./k8s_classic"
   unique_id               = var.unique_id
   rg_id                   = ibm_resource_group.resource_group.id
   cluster_datacenter      = var.k8s_classic_location # "dal10"
