@@ -102,7 +102,7 @@ module "roks_classic" {
   source                  = "./roks_classic"
   unique_id               = var.unique_id
   rg_id                   = ibm_resource_group.resource_group.id
-  cluster_datacenter      = "dal10"
+  cluster_datacenter      = var.k8s_classic_location # "dal10"
   cluster_private_vlan    = "3136364"
   cluster_public_vlan     = "3136362"
   pod_subnet              = "172.30.0.0/16"
