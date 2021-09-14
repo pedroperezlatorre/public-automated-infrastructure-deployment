@@ -117,7 +117,7 @@ module "roks_classic" {
   machine_type            = "b3c.4x16"  # "b3c.16x64"
   cluster_hardware        = "shared"
   default_pool_size       = 1
-  entitlement             = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
+  entitlement             = "" # "" or "cloud_pak" : Cloud Pak License: set only when you create the WorkerPool
   disk_encryption          = "true"
 
 
@@ -128,7 +128,7 @@ module "roks_classic" {
   wp_machine_type         = "b3c.4x16"
   wp_hardware             = "shared"
   wp_disk_encryption      = "true"
-  wp_entitlement          = "cloud_pak" # Cloud Pak License: set only when you create the WorkerPool
+  wp_entitlement          = "cloud_pak" # "" or "cloud_pak" : Cloud Pak License: set only when you create the WorkerPool
 
 }
 
