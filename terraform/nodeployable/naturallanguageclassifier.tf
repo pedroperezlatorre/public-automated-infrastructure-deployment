@@ -18,7 +18,7 @@ resource "ibm_resource_key" "natural_language_classifier_key" {
 }
 
 resource "ibm_container_bind_service" "natural_language_classifier_service_binding" {
-  cluster_name_id       = module.roks_classic.cluster_id
+  cluster_name_id       = module.k8s_service.cluster_id
   service_instance_name = ibm_resource_instance.natural_language_classifier_instance.name
   namespace_id          = var.unique_id
   resource_group_id     = ibm_resource_group.resource_group.id

@@ -1,23 +1,6 @@
-# Generic K8S Cluster credentials
-###############################################################################################
-provider "kubernetes" {
-  host                   = data.ibm_container_cluster_config.cluster.host
-  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
-  client_key             = data.ibm_container_cluster_config.cluster.admin_key
-  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
-}
-
-resource "kubernetes_namespace" "prod" {
-  metadata {
-    name = var.unique_id
-  }
-}
-###############################################################################################
-
-
 # # ROKS-VPC Cluster
 # ###############################################################################################
-# module "roks" {
+# module "k8s_service" {
 #   source        = "./roks"
 #   unique_id     = var.unique_id
 #   rg_id         = ibm_resource_group.resource_group.id
@@ -33,7 +16,7 @@ resource "kubernetes_namespace" "prod" {
 # }
 
 # data "ibm_container_cluster_config" "cluster" {
-#   cluster_name_id = module.roks.cluster_id
+#   cluster_name_id = module.k8s_service.cluster_id
 #   admin           = true
 # }
 # ###############################################################################################
@@ -42,7 +25,7 @@ resource "kubernetes_namespace" "prod" {
 
 # # IKS-VPC Cluster
 # ###############################################################################################
-# module "iks_vpc" {
+# module "k8s_service" {
 #   source        = "./iks_vpc"
 #   unique_id     = var.unique_id
 #   rg_id         = ibm_resource_group.resource_group.id
@@ -57,48 +40,15 @@ resource "kubernetes_namespace" "prod" {
 # }
 
 # data "ibm_container_cluster_config" "cluster" {
-#   cluster_name_id = module.iks_vpc.cluster_id
+#   cluster_name_id = module.k8s_service.cluster_id
 #   admin           = true
 # }
 # ###############################################################################################
 
 
-
-
-# # IKS-Classic Cluster
-# ###############################################################################################
-# module "iks_classic" {
-#   source        = "./iks_classic"
-#   unique_id     = var.unique_id
-#   rg_id         = ibm_resource_group.resource_group.id
-#   ibm_region    = var.ibm_region
-#   cluster_datacenter = "fra02"
-#   cluster_private_vlan  = "3132960"
-#   cluster_public_vlan   = "3132962"
-#   pod_subnet               = "172.30.0.0/16"
-#   service_subnet           = "172.21.0.0/16"
-#   machine_type  = "b3c.4x16"
-#   cluster_hardware  = "shared"
-#   default_pool_size  = 1
-#   kube_version  = "1.20.10"
-#   # cidr_blocks   = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
-#   # Additional WorkerPool
-#   # pool1_size    = 0  # Number of nodes per zone (0: Don't deploy pool)
-#   # pool1_type    = "b3c.4x16"
-# }
-
-# data "ibm_container_cluster_config" "cluster" {
-#   cluster_name_id = module.iks_classic.cluster_id
-#   admin           = true
-# }
-# ###############################################################################################
-
-
-
-
-# ROKS-Classic Cluster
+# K8S-Classic Cluster
 ###############################################################################################
-module "roks_classic" {
+module "k8s_service" {
   source                  = "./roks_classic"
   unique_id               = var.unique_id
   rg_id                   = ibm_resource_group.resource_group.id
@@ -130,9 +80,26 @@ module "roks_classic" {
   wp_entitlement          = "cloud_pak" # "" or "cloud_pak" : Cloud Pak License: set only when you create the WorkerPool
 
 }
+###############################################################################################
+
+
+# Generic K8S Cluster credentials
+###############################################################################################
+provider "kubernetes" {
+  host                   = data.ibm_container_cluster_config.cluster.host
+  client_certificate     = data.ibm_container_cluster_config.cluster.admin_certificate
+  client_key             = data.ibm_container_cluster_config.cluster.admin_key
+  cluster_ca_certificate = data.ibm_container_cluster_config.cluster.ca_certificate
+}
+
+resource "kubernetes_namespace" "prod" {
+  metadata {
+    name = var.unique_id
+  }
+}
 
 data "ibm_container_cluster_config" "cluster" {
-  cluster_name_id = module.roks_classic.cluster_id
+  cluster_name_id = module.k8s_service.cluster_id
   admin           = true
 }
 ###############################################################################################
