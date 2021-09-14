@@ -60,13 +60,13 @@ module "k8s_service" {
   # worker_num              = 0   # must be greater than 0
 
   # ROKS or IKS
-  kube_version            = "1.20.10" # ROKS or IKS - Command: $ ibmcloud ks versions
+  kube_version            = "4.6.42_openshift" # ROKS or IKS - Command: $ ibmcloud ks versions
 
   # Default Worker Pool
   machine_type            = "b3c.4x16"  # "b3c.16x64"
   cluster_hardware        = "shared"
   default_pool_size       = 1
-  entitlement             = "" # "" or "cloud_pak" : Cloud Pak License: set only when you create the WorkerPool
+  entitlement             = "cloud_pak" # "" or "cloud_pak" : Cloud Pak License: set only when you create the WorkerPool
   disk_encryption          = "true"
 
 
