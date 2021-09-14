@@ -25,18 +25,7 @@ The only thing you must do is fill the following **URL** with the specific param
 ```
 https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 &region_name=<IBM-REGION>
-&repository=<INFRASTRUCTURE-REPO-URL>
-&branch=<INFRASTRUCTURE-REPO-BRANCH>
-&repository_token=<INFRASTRUCTURE-REPO-TOKEN>
-&apiKey=<IBM-API-KEY>
-&toolchain_name=<TOOLCHAIN-NAME>
-&source_provider=<IBM-GIT-PROVIDER>
-&type=<IBM-GIT-PROVIDER-TYPE>
-&customer=<CUSTOMER-NAME>
-```
-```
-https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
-&region_name=<IBM-REGION>
+&k8sClassicLocation=<IBM-K8S-CLASSIC-ZONE>
 &repository=<INFRASTRUCTURE-REPO-URL>
 &branch=<INFRASTRUCTURE-REPO-BRANCH>
 &repository_token=<INFRASTRUCTURE-REPO-TOKEN>
@@ -48,6 +37,7 @@ https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:<IBM-REGION>
 ```
 
 - **IBM-REGION**: Region where you want to deploy every objects -> ```$ ibmcloud regions```
+- **IBM-K8S-CLASSIC-ZONE**: (Required only for K8s Classic Infra) Zone where to deploy K8s cluster service (ROKS/IKS) -> ```% ibmcloud ks locations```
 - **INFRASTRUCTURE-REPO-URL**: URL of the Git infrastructure repo -> ```https://github.ibm.com/tech-garage-spgi/infra-repo```
 - **INFRASTRUCTURE-REPO-BRANCH**: ```master```/```release```/```develop```,...
 - **INFRASTRUCTURE-REPO-TOKEN**: Access token to Git repo. [Create GitHub Personal Access Token](https://github.ibm.com/settings/tokens).
