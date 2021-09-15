@@ -53,8 +53,8 @@ module "k8s_service" {
   unique_id               = var.unique_id
   rg_id                   = ibm_resource_group.resource_group.id
   cluster_datacenter      = var.k8s_classic_location # "dal10"
-  cluster_private_vlan    = "3136364"
-  cluster_public_vlan     = "3136362"
+  cluster_private_vlan    = var.classic_private_vlan  # $ ibmcloud ks vlan ls --zone <ClassicInfrastructureZone>
+  cluster_public_vlan     = var.classic_public_vlan   # $ ibmcloud ks vlan ls --zone <ClassicInfrastructureZone>
   pod_subnet              = "172.30.0.0/16"
   service_subnet          = "172.21.0.0/16"
   # worker_num              = 0   # must be greater than 0

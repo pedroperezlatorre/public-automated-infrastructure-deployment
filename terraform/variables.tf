@@ -48,6 +48,16 @@ variable "k8s_classic_location" {
   description = "Classic Infrastructure Zone. Command: % ibmcloud ks locations"
   default     = "dal10"
 }
+
+variable "classic_private_vlan" {
+  description = "Classic Infrastructure Private VLAN"
+  default     = ""
+}
+
+variable "classic_public_vlan" {
+  description = "Classic Infrastructure Public VLAN"
+  default     = ""
+}
 ##############################################################################
 
 

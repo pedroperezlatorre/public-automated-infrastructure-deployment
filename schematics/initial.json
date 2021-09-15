@@ -55,6 +55,16 @@
           "type": "string"
           },
           {
+          "name": "classic_private_vlan",
+          "value": "k8s_classic_private_vlan_placeholder",
+          "type": "string"
+          },
+          {
+          "name": "classic_public_vlan",
+          "value": "k8s_classic_public_vlan_placeholder",
+          "type": "string"
+          },
+          {
           "name": "db2_plan",
           "value": "standard",
           "type": "string"

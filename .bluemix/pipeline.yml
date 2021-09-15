@@ -62,6 +62,18 @@ stages:
           # Set the K8s Classic Location
           sed -i "s/k8s_classic_location_placeholder/$K8S_CLASSIC_LOCATION/g" ./schematics/initial.json
 
+          # Get Classic VLANs
+          privateVlan=''
+          publicVlan=''
+          if [ ! -z $K8S_CLASSIC_LOCATION ]
+          then
+            vlansZone=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION)
+            privateVlan=$(echo $vlansZone | grep "private" | tr -s ' ' | cut -d' ' -f1)
+            publicVlan=$(echo $vlansZone | grep "public" | tr -s ' ' | cut -d' ' -f1)
+          fi
+          sed -i "s/k8s_classic_private_vlan_placeholder/$privateVlan/g" ./schematics/initial.json
+          sed -i "s/k8s_classic_public_vlan_placeholder/$publicVlan/g" ./schematics/initial.json
+
           WORKSPACE_NAME=$(cat ./schematics/initial.json | jq ".name")
           WORKSPACE_ID=$(ibmcloud schematics workspace list --json | jq ".workspaces | select (. != null) | .[] | select ( .name == $WORKSPACE_NAME ) .id" | sed -e 's/^"//' -e 's/"$//')
 
