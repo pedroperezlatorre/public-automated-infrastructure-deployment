@@ -20,6 +20,7 @@ resource "ibm_resource_key" "w_discovery_key" {
 }
 
 resource "ibm_container_bind_service" "w_discovery_service_binding" {
+  depends_on            = [kubernetes_namespace.prod]
   cluster_name_id       = module.k8s_service.cluster_id
   service_instance_name = ibm_resource_instance.w_discovery_instance.name
   namespace_id          = var.unique_id

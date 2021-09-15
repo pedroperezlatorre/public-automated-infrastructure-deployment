@@ -18,6 +18,7 @@ resource "ibm_resource_key" "texttospeech_key" {
 }
 
 resource "ibm_container_bind_service" "texttospeech_service_binding" {
+  depends_on            = [kubernetes_namespace.prod]
   cluster_name_id       = module.k8s_service.cluster_id
   service_instance_name = ibm_resource_instance.texttospeech_instance.name
   namespace_id          = var.unique_id
