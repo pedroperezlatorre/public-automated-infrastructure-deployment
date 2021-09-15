@@ -18,6 +18,7 @@ resource "ibm_resource_key" "toneanalyzer_key" {
 }
 
 resource "ibm_container_bind_service" "toneanalyzer_service_binding" {
+  depends_on            = [kubernetes_namespace.prod]
   cluster_name_id       = module.k8s_service.cluster_id
   service_instance_name = ibm_resource_instance.toneanalyzer_instance.name
   namespace_id          = var.unique_id
