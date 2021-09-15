@@ -16,6 +16,9 @@ properties:
   - name: CUSTOMER
     value: ${CUSTOMER}
     type: text
+  - name: K8S_CLASSIC_LOCATION
+    value: ${K8S_CLASSIC_LOCATION}
+    type: text
 stages:
   - name: CREATE/UPDATE SCHEMATICS WS
     inputs:
@@ -55,6 +58,21 @@ stages:
 
           # Set the Customer name
           sed -i "s/customer_placeholder/$CUSTOMER/g" ./schematics/initial.json
+
+          # Set the K8s Classic Location
+          sed -i "s/k8s_classic_location_placeholder/$K8S_CLASSIC_LOCATION/g" ./schematics/initial.json
+
+          # Get Classic VLANs
+          privateVlan=''
+          publicVlan=''
+          if [ ! -z $K8S_CLASSIC_LOCATION ]
+          then
+            #vlansZone=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION)
+            privateVlan=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION | grep "private" | tr -s ' ' | cut -d' ' -f1)
+            publicVlan=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION | grep "public" | tr -s ' ' | cut -d' ' -f1)
+          fi
+          sed -i "s/k8s_classic_private_vlan_placeholder/$privateVlan/g" ./schematics/initial.json
+          sed -i "s/k8s_classic_public_vlan_placeholder/$publicVlan/g" ./schematics/initial.json
 
           WORKSPACE_NAME=$(cat ./schematics/initial.json | jq ".name")
           WORKSPACE_ID=$(ibmcloud schematics workspace list --json | jq ".workspaces | select (. != null) | .[] | select ( .name == $WORKSPACE_NAME ) .id" | sed -e 's/^"//' -e 's/"$//')
