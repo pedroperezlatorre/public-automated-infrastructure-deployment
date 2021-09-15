@@ -65,11 +65,13 @@ stages:
           # Get Classic VLANs
           privateVlan=''
           publicVlan=''
-          if [ ! -z $K8S_CLASSIC_LOCATION ]
+          if [ ! -z "$K8S_CLASSIC_LOCATION" ]
           then
+            set +e
             #vlansZone=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION)
             privateVlan=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION | grep "private" | tr -s ' ' | cut -d' ' -f1)
             publicVlan=$(ibmcloud ks vlan ls --zone $K8S_CLASSIC_LOCATION | grep "public" | tr -s ' ' | cut -d' ' -f1)
+            set -e
           fi
           sed -i "s/k8s_classic_private_vlan_placeholder/$privateVlan/g" ./schematics/initial.json
           sed -i "s/k8s_classic_public_vlan_placeholder/$publicVlan/g" ./schematics/initial.json
