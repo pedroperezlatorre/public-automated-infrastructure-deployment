@@ -45,6 +45,7 @@ services:
           REGION_ID: "{{env_id}}"
           CR_PLAN: $env.cr_plan || 'free'
           CUSTOMER: '{{customer}}'
+          K8S_CLASSIC_LOCATION: '{{k8sClassicLocation}}'
         execute: true
   webide:
     service_id: orion
